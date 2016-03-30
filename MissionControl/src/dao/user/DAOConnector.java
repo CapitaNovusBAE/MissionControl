@@ -1,3 +1,4 @@
+package dao.user;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,13 +22,8 @@ public class DAOConnector {
 	    
 	    public Connection connect() throws SQLException
 	    {
-	       Connection connection=DriverManager.getConnection(URL,user,pass);
-	        if(connection == null){
-	            System.out.println("no connection");
-	        }else{
-	            System.out.println("Connected");
-	        }
-	        return connection;
+	       Connection connection=DriverManager.getConnection(URL,user,pass);	    
+	       return connection;
 	    }
 	    
 	}
