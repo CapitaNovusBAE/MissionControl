@@ -5,103 +5,149 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
 import dao.AbstractDAO;
 
+/**Data Access Object for Mission class
+ * @author Vadim Khoruzhenko
+ *
+ */
 public class MissionDAO extends AbstractDAO {
 
 	private static final String ID = "id";
 	private static final String TITLE = "title";
-	private static final String CORDINATES = "cordinates";
+	private static final String COORDINATES = "coordinates";
 	private static final String TABLE="missions";
 
+	/**
+	 * @return all missions from db
+	 */
 	public List<Mission> getAll(){
-		List<Mission> list = new ArrayList<Mission>();
+		final List<Mission> list = new ArrayList<Mission>();
 		try {
-			Connection conn =getConnection();
-			if(conn==null){
-				return list;
-			}
+			final Connection conn =getConnection();
 			PreparedStatement prs = null;
 			ResultSet rs = null;
-			String query = "SELECT * FROM " + TABLE;
+			final String query = "SELECT * FROM " + TABLE;
 			prs = conn.prepareStatement(query);
 			rs = prs.executeQuery();
-			
+
 			while (rs.next()) {
-				Mission mission = new Mission(rs.getInt(ID), rs.getString(TITLE),jsonToCoordinates(rs.getString(CORDINATES)));
+				final Mission mission = new Mission(rs.getInt(ID), rs.getString(TITLE),jsonToCoordinates(rs.getString(COORDINATES)));
 				list.add(mission);
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
-		return list;	
+		return list;
 	}
 
 
-	public boolean add(Mission mission){
+	/**Add new mission to db
+	 * @param mission {@link Mission}
+	 * @return true if mission was successfully added
+	 */
+	public boolean add(final Mission mission){
 		PreparedStatement prs = null;
 
 		try {
-			Connection conn = getConnection();
-			if(conn==null){
-				return false;
-			}
-			String query = "INSERT INTO " + TABLE +  "(" + TITLE+ "," + CORDINATES + ") VALUES (?,?);";
+			final Connection conn = getConnection();
+			final String query = "INSERT INTO " + TABLE +  "(" + TITLE+ "," + COORDINATES + ") VALUES (?,?);";
 			prs = conn.prepareStatement(query);
 			prs.setString(1, mission.getTittle());
 			prs.setString(2, coordinatesToJson(mission.getCoordiantes()));
 			return prs.execute();
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	public Mission get(int id){
+	/**Get mission from db
+	 * @param id mission id
+	 * @return Mission by id
+	 */
+	public Mission get(final int id){
 		PreparedStatement prs = null;
-				try {
-			Connection conn = getConnection();
-			if(conn==null){
-				return null;
-			}
-			String query = "SELECT * FROM "+TABLE+" WHERE " + ID + " = " +  id;
+		try {
+			final Connection conn = getConnection();
+			final String query = "SELECT * FROM " + TABLE + " WHERE " + ID + " = " +  id;
 			prs = conn.prepareStatement(query);
-			ResultSet rs = prs.executeQuery();
+			final ResultSet rs = prs.executeQuery();
 			while (rs.next()) {
-				return new Mission(rs.getInt(ID), rs.getString(TITLE),jsonToCoordinates(rs.getString(CORDINATES)));
+				return new Mission(rs.getInt(ID), rs.getString(TITLE),jsonToCoordinates(rs.getString(COORDINATES)));
 			}
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 
 		}
 		return null;
 	}
-	
-	public boolean update(Mission mission){
+
+	/**
+	 * @param mission {@link Mission}
+	 * @return true  if updated, otherwise false
+	 */
+	public boolean update(final Mission mission){
 		try {
-			Connection conn = getConnection();
+			final Connection conn = getConnection();
 			if(conn==null){
 				return false;
 			}
-			String query = "UPDATE "+ TABLE +" SET " + TITLE + "='" + mission.getTittle()+ "', " + CORDINATES + "='" + coordinatesToJson(mission.getCoordiantes()) + "'  WHERE " + ID + " = "+ mission.getID();
-			PreparedStatement prs = conn.prepareStatement(query);
+			final String query = "UPDATE "+ TABLE +" SET " + TITLE + "='" + mission.getTittle()+ "', " + COORDINATES + "='" + coordinatesToJson(mission.getCoordiantes()) + "'  WHERE " + ID + " = "+ mission.getID();
+			final PreparedStatement prs = conn.prepareStatement(query);
 			return prs.execute();
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	private List<Coordinates> jsonToCoordinates(String json){
-		
-		return new ArrayList<Coordinates>();
-		//TODO
+	/*Convert Json string from db to coordinates list
+	 * */
+	private List<Coordinates> jsonToCoordinates(final String coordinatesJson){
+
+		final List<Coordinates> coordinatesList = new ArrayList<Coordinates>();
+		try {
+			final JSONArray arr = new JSONArray(coordinatesJson);
+
+			for (int i = 0; i < arr.length(); i++) {
+				double x=0;
+				double y=0;
+
+				final JSONObject json_data = arr.getJSONObject(i);
+
+				if (json_data.has("x")) {
+					x = json_data.getDouble("x");
+				}
+				if (json_data.has("y")) {
+					y = json_data.getDouble("y");
+				}
+				coordinatesList.add(new Coordinates(x,y));
+			}
+		} catch (final JSONException e) {
+			e.printStackTrace();
+		}
+		return coordinatesList;
 	}
-	private String coordinatesToJson(List<Coordinates> coordinates){
-		
-		return null;
-		//TODO
+	/*
+	 * Convert coordinates List to Json string to store in db
+	 * */
+	private String coordinatesToJson(final List<Coordinates> coordinatesList){
+
+		final Gson gson = new Gson();
+		final StringBuilder sb = new StringBuilder();
+		for(final Coordinates c : coordinatesList) {
+			sb.append(gson.toJson(c));
+		}
+		return sb.toString();
 	}
 
 }

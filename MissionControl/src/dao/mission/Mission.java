@@ -3,48 +3,72 @@ package dao.mission;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mission object
+ * @author Vadim Khoruzhenko
+ *
+ */
 public class Mission {
 
 	private int missionID;
-	private String missionTitle;
-	private List<Coordinates> coordinatesList;
+	private final String missionTitle;
+	private final List<Coordinates> coordinatesList;
 
-	public Mission(String missionTitle) {
+	/**Constructor
+	 * @param missionTitle a mission's title
+	 */
+	public Mission(final String missionTitle) {
 		this.missionTitle = missionTitle;
 		this.coordinatesList=new ArrayList<Coordinates>();
 	}
-	
-	public Mission(int missionID, String missionTitle,List<Coordinates> coordinates) {
+
+	/**Constructor to create a mission object from db
+	 * @param missionID mission's id
+	 * @param missionTitle mission's title
+	 * @param coordinates mission's coordinates
+	 */
+	public Mission(final int missionID, final String missionTitle,final List<Coordinates> coordinates) {
 		this.missionID = missionID;
 		this.missionTitle = missionTitle;
 		this.coordinatesList = coordinates;
 	}
-	
+
+	/**
+	 * @return mission's id
+	 */
 	public int getID() {
-		return missionID;
+		return this.missionID;
 	}
 
+	/**
+	 * @return mission's title
+	 */
 	public String getTittle() {
-		return missionTitle;
+		return this.missionTitle;
 	}
 
-	public void setTittle(String missionTittle) {
-		this.missionTitle = missionTittle;
-	}
-	
+	/**
+	 * @return all coordinates for to a mission
+	 */
 	public List<Coordinates> getCoordiantes(){
-		return coordinatesList;
+		return this.coordinatesList;
 	}
-	public void addCoordiantes(Coordinates coordinates){
-		coordinatesList.add(coordinates);
+	/**Add new coordinates to the coordinates' list
+	 * @param coordinates {@link Coordinates}
+	 */
+	public void addCoordiantes(final Coordinates coordinates){
+		this.coordinatesList.add(coordinates);
 	}
-	public void removeCoordiantes(Coordinates coordinates){
-		coordinatesList.remove(coordinates);
+	/**Remove coordinates from the coordinates' list
+	 * @param coordinates {@link Coordinates}
+	 */
+	public void removeCoordiantes(final Coordinates coordinates){
+		this.coordinatesList.remove(coordinates);
 	}
 
 	@Override
 	public String toString() {
-		return "Mission: [ID :" + missionID + " Title :" + missionTitle + "]";
+		return "Mission: [ID :" + this.missionID + " Title :" + this.missionTitle + "]";
 	}
-	
+
 }
