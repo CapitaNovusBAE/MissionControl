@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 
 		PreparedStatement prs = null;
 
@@ -59,9 +59,10 @@ public class UserDAOImpl implements UserDAO {
 			prs.setString(1, user.getPermissionLevel().name());
 			prs.setString(2, user.getName());
 			prs.setString(3, user.getPassword());
-
+			return prs.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -93,34 +94,39 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public boolean updateUser(User user) {
 
 		try {
 
 			DAOConnector dc = new DAOConnector();
 			Connection conn = dc.connect();
 
-			String query = "UPDATE users SET " + PASSWORD + "=" + user.getPassword() + PERMISSIONLEVELS + "="
-					+ user.getPermissionLevel() + " WHERE " + USERNAME + " = " + user.getName();
-			
+			String query = "UPDATE users SET " + PASSWORD + "='" + user.getPassword() + "'," + PERMISSIONLEVELS + "='"
+					+ user.getPermissionLevel() + "' WHERE " + USERNAME + " = '" + user.getName() + "'";
+
 			PreparedStatement prs = conn.prepareStatement(query);
+			return prs.execute();
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
 	@Override
-	public void deleteUser(String userName) {
+	public boolean deleteUser(String userName) {
 
 		try {
 			DAOConnector dc = new DAOConnector();
 			Connection conn = dc.connect();
 
-			String query = "UPDATE users SET " + ACTIVE + "=" + false + " WHERE " + USERNAME + " = " + userName;
-
+			String query = "UPDATE users SET " + ACTIVE + "=" + false + " WHERE " + USERNAME + " = '" + userName + "'";
+			PreparedStatement prs = conn.prepareStatement(query);
+			return prs.execute();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

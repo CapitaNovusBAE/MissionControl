@@ -28,8 +28,8 @@ public class User {
 		this.password = password;
 		this.pLevel = pLevel;
 		this.active = active;
-	}
-
+	}  
+    
 
 	public PermissionLevels getPermissionLevel() {
 		return pLevel;
