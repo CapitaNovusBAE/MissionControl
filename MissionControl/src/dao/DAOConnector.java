@@ -1,19 +1,19 @@
-package dao.user;
+package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DAOConnector {
 
-	    private String URL = "jdbc:postgresql://localhost:5432/alis";
-	    private String user = "postgres";
-	    private String pass = "novustemp";
-	    private String Driver = "org.postgresql.Driver";
+	    private static final String URL = "jdbc:postgresql://localhost:5432/alis";
+	    private static final String USER = "postgres";
+	    private static final String PASS = "novustemp";
+	    private static final String DRIVER = "org.postgresql.Driver";
 	                 
 	    public DAOConnector() throws InstantiationException, IllegalAccessException {
 	    
 	            try {
-	                Class.forName(Driver).newInstance();
+	                Class.forName(DRIVER).newInstance();
 	                
 	            } catch (ClassNotFoundException e) {
 	                e.printStackTrace();
@@ -22,7 +22,7 @@ public class DAOConnector {
 	    
 	    public Connection connect() throws SQLException
 	    {
-	       Connection connection=DriverManager.getConnection(URL,user,pass);	    
+	       Connection connection=DriverManager.getConnection(URL,USER,PASS);	    
 	       return connection;
 	    }
 	    
