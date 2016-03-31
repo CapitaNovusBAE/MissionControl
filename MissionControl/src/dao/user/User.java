@@ -2,7 +2,7 @@ package dao.user;
 
 /**
  * User Class
- * 
+ *
  * @author Ali Gurlek
  *
  */
@@ -17,11 +17,12 @@ public class User {
 
 		LOW, MEDIUM, HIGH
 	}
-	
+
 	/**Constructor
-	 * @param User username, password
+	 * @param userName User name
+	 * @param password User password
 	 */
-	public User(String userName, String password) {
+	public User(final String userName, final String password) {
 		super();
 		this.name = userName;
 		this.password = password;
@@ -30,9 +31,12 @@ public class User {
 	}
 
 	/**Constructor
-	 * @param User username, password, permissonLevel, active
-	 */
-	public User(String userName, String password, PermissionLevels pLevel, boolean active) {
+	 * @param userName
+	 * @param password
+	 * @param pLevel
+	 * @param active
+	 *	 */
+	public User(final String userName, final String password, final PermissionLevels pLevel, final boolean active) {
 		super();
 		this.name = userName;
 		this.password = password;
@@ -41,40 +45,40 @@ public class User {
 	}
 
 	public PermissionLevels getPermissionLevel() {
-		return pLevel;
+		return this.pLevel;
 	}
 
-	public void setpLevel(PermissionLevels pLevel) {
+	public void setpLevel(final PermissionLevels pLevel) {
 		this.pLevel = pLevel;
 	}
 
 	public boolean isActive() {
-		return active;
+		return this.active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(final boolean active) {
 		this.active = active;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	public void setName(String userName) {
+	public void setName(final String userName) {
 		this.name = userName;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "User: [Name: " + name + " Permission Level: " + pLevel + " Active: " + isActive() + "]";
+		return "User: [Name: " + this.name + " Permission Level: " + this.pLevel + " Active: " + isActive() + "]";
 	}
 
 }

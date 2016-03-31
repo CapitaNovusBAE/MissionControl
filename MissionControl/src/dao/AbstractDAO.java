@@ -1,12 +1,10 @@
 package dao;
 
-import java.io.Closeable;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Base class for DAO
- * 
+ *
  * @author Vadim Khoruzhenko
  *
  */
@@ -28,9 +26,9 @@ public abstract class AbstractDAO {
 
 	/**
 	 * @param closeable
-	 * @return true if connection closed succesfully else false
+	 * @return true if connection closed successfully else false
 	 */
-	public boolean closeQuietly(AutoCloseable closeable) {
+	public boolean closeQuietly(final AutoCloseable closeable) {
 
 		try {
 			if (closeable != null) {
@@ -39,7 +37,7 @@ public abstract class AbstractDAO {
 			}
 			return true;
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 
 			System.out.println("Cannot close" + closeable);
 			return false;
