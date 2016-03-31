@@ -38,6 +38,6 @@ public class DAOConnector {
 		final Connection connection=DriverManager.getConnection(URL,USER,PASS);
 		return connection;
 	}
-
+	
 }
 

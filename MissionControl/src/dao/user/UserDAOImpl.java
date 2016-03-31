@@ -6,26 +6,34 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.AbstractDAO;
 import dao.DAOConnector;
 import dao.user.User.PermissionLevels;
 
-public class UserDAOImpl implements UserDAO {
+/**
+ * Data Access Object for User
+ * 
+ * @author Ali Gurlek
+ *
+ */
+
+public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 	private static final String PERMISSIONLEVELS = "permissionLevel";
 	private static final String ACTIVE = "active";
 
+	// return all users from db
 	@Override
 	public List<User> getAllUsers() {
 
 		List<User> userList = new ArrayList<User>();
-
+		final Connection conn = getConnection();
+		PreparedStatement prs = null;
+		ResultSet rs = null;
 		try {
-			DAOConnector dc = new DAOConnector();
-			Connection conn = dc.connect();
-			PreparedStatement prs = null;
-			ResultSet rs = null;
+
 			String query = "SELECT * FROM users";
 
 			prs = conn.prepareStatement(query);
@@ -39,10 +47,17 @@ public class UserDAOImpl implements UserDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+
+			closeQuietly(conn);
+			closeQuietly(prs);
+			closeQuietly(rs);
 		}
+
 		return userList;
 	}
 
+	// Add new user to db
 	@Override
 	public boolean addUser(User user) {
 
@@ -50,34 +65,32 @@ public class UserDAOImpl implements UserDAO {
 
 		try {
 
-			DAOConnector dc = new DAOConnector();
-			Connection conn = dc.connect();
-
+			final Connection conn = getConnection();
 			String query = "INSERT INTO users (" + PERMISSIONLEVELS + "," + USERNAME + "," + PASSWORD
 					+ ") VALUES (?,?,?);";
 			prs = conn.prepareStatement(query);
 			prs.setString(1, user.getPermissionLevel().name());
 			prs.setString(2, user.getName());
 			prs.setString(3, user.getPassword());
-			return prs.execute();
+			return prs.execute() && closeQuietly(conn) && closeQuietly(prs);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
 
+	// return user by its username if exist
 	@Override
 	public User getUser(String userName) {
 
 		PreparedStatement prs = null;
-
+		ResultSet rs = null;
+		final Connection conn = getConnection();
 		try {
-			DAOConnector dc = new DAOConnector();
-			Connection conn = dc.connect();
-
 			String query = "SELECT * FROM users WHERE " + USERNAME + " = '" + userName + "' ";
 			prs = conn.prepareStatement(query);
-			ResultSet rs = prs.executeQuery();
+			rs = prs.executeQuery();
 
 			while (rs.next()) {
 
@@ -89,23 +102,28 @@ public class UserDAOImpl implements UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 
+		} finally {
+
+			closeQuietly(conn);
+			closeQuietly(prs);
+			closeQuietly(rs);
 		}
 		return null;
 	}
 
+	// update users information and permission level
 	@Override
 	public boolean updateUser(User user) {
 
 		try {
 
-			DAOConnector dc = new DAOConnector();
-			Connection conn = dc.connect();
+			final Connection conn = getConnection();
 
 			String query = "UPDATE users SET " + PASSWORD + "='" + user.getPassword() + "'," + PERMISSIONLEVELS + "='"
 					+ user.getPermissionLevel() + "' WHERE " + USERNAME + " = '" + user.getName() + "'";
 
 			PreparedStatement prs = conn.prepareStatement(query);
-			return prs.execute();
+			return prs.execute() && closeQuietly(conn) && closeQuietly(prs);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,17 +131,18 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	// delete user -- activate=false
 	@Override
 	public boolean deleteUser(String userName) {
 
 		try {
-			DAOConnector dc = new DAOConnector();
-			Connection conn = dc.connect();
+
+			final Connection conn = getConnection();
 
 			String query = "UPDATE users SET " + ACTIVE + "=" + false + " WHERE " + USERNAME + " = '" + userName + "'";
 			PreparedStatement prs = conn.prepareStatement(query);
-			return prs.execute();
-			
+			return prs.execute() && closeQuietly(conn) && closeQuietly(prs);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

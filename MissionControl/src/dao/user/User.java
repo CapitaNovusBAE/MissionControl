@@ -1,5 +1,9 @@
 package dao.user;
 
+/**User Class
+ * @author Ali Gurlek
+ *
+ */
 public class User {
     
     private String name;

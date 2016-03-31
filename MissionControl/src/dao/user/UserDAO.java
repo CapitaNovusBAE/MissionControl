@@ -1,6 +1,14 @@
 package dao.user;
 
+
 import java.util.List;
+
+/**Data Access Object for User Interface
+ * @author Ali Gurlek
+ *
+ */
+
+
 
 public interface UserDAO {
     
