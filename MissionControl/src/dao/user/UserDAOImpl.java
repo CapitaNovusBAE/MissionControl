@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import dao.AbstractDAO;
 import dao.DAOConnector;
 import dao.user.User.PermissionLevels;
@@ -24,7 +23,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 	private static final String PERMISSIONLEVELS = "permissionLevel";
 	private static final String ACTIVE = "active";
 
-	// return all users from db
+	/**
+	 * @param getAllUsers
+	 * @return return list of users from db
+	 */
 	@Override
 	public List<User> getAllUsers() {
 
@@ -57,7 +59,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		return userList;
 	}
 
-	// Add new user to db
+	/**
+	 * @param addUser
+	 * @return add user to  db
+	 */
 	@Override
 	public boolean addUser(User user) {
 
@@ -80,7 +85,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		}
 	}
 
-	// return user by its username if exist
+	/**
+	 * @param getUser
+	 * @return return user by its username if exist in db
+	 */
 	@Override
 	public User getUser(String userName) {
 
@@ -111,7 +119,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		return null;
 	}
 
-	// update users information and permission level
+	/**
+	 * @param updateUser
+	 * @return update provided information in db with the new inputs
+	 */
 	@Override
 	public boolean updateUser(User user) {
 
@@ -131,7 +142,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		}
 	}
 
-	// delete user -- activate=false
+	/**
+	 * @param deleteUser
+	 * @return delete user from db  -- its deactivate the activate field -- data entegrity
+	 */
 	@Override
 	public boolean deleteUser(String userName) {
 

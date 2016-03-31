@@ -1,39 +1,44 @@
 package dao.user;
 
-/**User Class
+/**
+ * User Class
+ * 
  * @author Ali Gurlek
  *
  */
 public class User {
-    
-    private String name;
-    private String password;
-    private PermissionLevels pLevel;
-    private boolean active;
 
-  
-    public enum PermissionLevels{
- 
-    	LOW,MEDIUM,HIGH
-    }
-    
+	private String name;
+	private String password;
+	private PermissionLevels pLevel;
+	private boolean active;
 
-    public User(String userName, String password) {
+	public enum PermissionLevels {
+
+		LOW, MEDIUM, HIGH
+	}
+	
+	/**Constructor
+	 * @param User username, password
+	 */
+	public User(String userName, String password) {
 		super();
 		this.name = userName;
 		this.password = password;
 		this.pLevel = PermissionLevels.LOW;
 		this.active = true;
 	}
-    
-    public User(String userName, String password, PermissionLevels pLevel, boolean active) {
+
+	/**Constructor
+	 * @param User username, password, permissonLevel, active
+	 */
+	public User(String userName, String password, PermissionLevels pLevel, boolean active) {
 		super();
 		this.name = userName;
 		this.password = password;
 		this.pLevel = pLevel;
 		this.active = active;
-	}  
-    
+	}
 
 	public PermissionLevels getPermissionLevel() {
 		return pLevel;
@@ -52,26 +57,24 @@ public class User {
 	}
 
 	public String getName() {
-        return name;
-    }
+		return name;
+	}
 
-    public void setName(String userName) {
-        this.name = userName;
-    }
+	public void setName(String userName) {
+		this.name = userName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
+	@Override
+	public String toString() {
+		return "User: [Name: " + name + " Permission Level: " + pLevel + " Active: " + isActive() + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "User: [Name: " + name + " Permission Level: " +  pLevel + " Active: " + isActive() +"]"; 
-    }
-      
-    
 }

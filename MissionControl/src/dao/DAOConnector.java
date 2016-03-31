@@ -1,4 +1,5 @@
 package dao;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,7 +16,9 @@ public class DAOConnector {
 	private static final String PASS = "novustemp";
 	private static final String DRIVER = "org.postgresql.Driver";
 
-	/**Constructor
+	/**
+	 * Constructor
+	 * 
 	 * @throws InstantiationException if no driver found
 	 * @throws IllegalAccessException
 	 */
@@ -33,11 +36,9 @@ public class DAOConnector {
 	 * @return {@link Connection}
 	 * @throws SQLException
 	 */
-	public Connection connect() throws SQLException
-	{
-		final Connection connection=DriverManager.getConnection(URL,USER,PASS);
+	public Connection connect() throws SQLException {
+		final Connection connection = DriverManager.getConnection(URL, USER, PASS);
 		return connection;
 	}
-	
-}
 
+}
