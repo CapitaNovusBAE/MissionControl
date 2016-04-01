@@ -1,0 +1,46 @@
+/*
+    Created on : 23-Mar-2016, 11:16:11
+    Author     : Novus_BAE
+*/
+
+.label{
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow(gaussian, rgba(225,225,225,0.5), 0,0,0,1);
+}
+
+.text-field{
+    -fx-min-width: 200;
+}
+
+.button{
+    -fx-background-color:
+        #707070,
+        linear-gradient(#fcfcfc, #f3f3f3),
+        linear-gradient(#f2f2f2 0%, #ebebeb 49%, #dddddd 50%, #cfcfcf 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.button:hover{
+    -fx-background-color:
+        #3c7fb1,
+        linear-gradient(#fafdfe, #e8f5fc),
+        linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+}
+
+#signInTitle{
+    -fx-font-size: 24px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+}
+
+#loginFailureText{
+    -fx-fill: FIREBRICK;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0,0,0,1);
+}
