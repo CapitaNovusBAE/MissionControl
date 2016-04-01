@@ -3,6 +3,7 @@ package dao.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
 		return userList;
 	}
+	
+	  public String getPassword() throws SQLException{
+		  return this.PASSWORD;
+	  }
 
 	// Add new user to db
 	@Override

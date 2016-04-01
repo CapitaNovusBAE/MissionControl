@@ -11,14 +11,14 @@ import java.sql.SQLException;
  */
 public class DAOConnector {
 
-	private static final String URL = "jdbc:postgresql://localhost:5432/alis";
+	private static final String URL = "jdbc:postgresql://localhost:5432/missionControl";
 	private static final String USER = "postgres";
 	private static final String PASS = "novustemp";
 	private static final String DRIVER = "org.postgresql.Driver";
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @throws InstantiationException if no driver found
 	 * @throws IllegalAccessException
 	 */

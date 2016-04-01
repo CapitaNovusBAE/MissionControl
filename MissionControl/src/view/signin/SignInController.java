@@ -2,6 +2,7 @@ package view.signin;
 
 import java.sql.SQLException;
 
+import controller.SignInAuthenticator;
 import controller.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import model.Authenticator;
 
 public class SignInController{
 
@@ -21,7 +21,6 @@ public class SignInController{
 	private Button signInBtn;
 	@FXML
 	private Text signInFailText;
-
 
 	private MainApp mainApp;
 
@@ -48,7 +47,7 @@ public class SignInController{
          String  passwordInput	= pwInput.getText();
          boolean signInStatus = false;
 
-         Authenticator authenticator = new Authenticator(usernameInput, passwordInput);
+         SignInAuthenticator authenticator = new SignInAuthenticator(usernameInput, passwordInput);
          signInStatus = authenticator.isLoginStatus();
 
          if (signInStatus){
