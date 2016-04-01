@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.home.HomeController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -30,4 +30,14 @@
         </menus>
       </MenuBar>
    </top>
+   <center>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
+        <items>
+          <Button fx:id="home" mnemonicParsing="false" onAction="#buttonPress" text="Home" />
+            <Button fx:id="assign" mnemonicParsing="false" onAction="#buttonPress" text="Assign" />
+            <Button fx:id="review" mnemonicParsing="false" onAction="#buttonPress" text="Review" />
+            <Button fx:id="admin" mnemonicParsing="false" onAction="#buttonPress" text="Admin" />
+        </items>
+      </ToolBar>
+   </center>
 </BorderPane>

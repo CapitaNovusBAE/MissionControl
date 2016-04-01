@@ -51,10 +51,9 @@ public class SignInController{
          signInStatus = authenticator.isLoginStatus();
 
          if (signInStatus){
-        	 mainApp.initMainLayout();
+        	 mainApp.initializeHome();
          } else {
         	 if(signInAttempts < 4){signInAttempts++;}
-        	 System.out.println(signInStatus);
         	 signInFailText.setText("Username or password incorrect."+"\n"+ (4 - signInAttempts) +" Attempts remaining");
          }
 

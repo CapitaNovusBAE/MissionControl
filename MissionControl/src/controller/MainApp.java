@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import view.admin.AdminPageController;
+import view.home.HomeController;
 import view.signin.SignInController;
 
 public class MainApp extends Application {
@@ -21,6 +23,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("APPLICATION NAME TBC");
 
@@ -28,7 +34,7 @@ public class MainApp extends Application {
         this.signInStage.setTitle("Sign In");
 
         SignIn();
-        
+
         //showMap();
         //showWaypointList();
         //showWaypointPlacement();
@@ -53,46 +59,54 @@ public class MainApp extends Application {
     	}
     }
 
-    public void initMainLayout() {
+    public void initializeHome() {
         try {
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/view/MainLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("/view/home/Home.fxml"));
             mainLayout = (BorderPane) loader.load();
 
-            gridPane = new GridPane();
-            gridPane.setHgap(10);
-            gridPane.setVgap(10);
-      
-            mainLayout.setCenter(gridPane);
-            
+            mainLayout.setBottom(gridPane);
+
+            HomeController controller = loader.getController();
+    		controller.setMainApp(this);
+
             signInStage.hide();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(mainLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
-            
-            navigation();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-	public void navigation(){
-	
+	public void adminPage(){
 		try{
-	    	FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("/view/navigation/NavigationPage.fxml"));
-			AnchorPane navigation = (AnchorPane) loader.load();
-	
-			gridPane.add(navigation, 0, 0);
-			//mainLayout.setCenter(navigation);
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/admin/AdminPage.fxml"));
+			AnchorPane adminPage = (AnchorPane) loader.load();
+
+			AdminPageController controller = loader.getController();
+    		controller.setMainApp(this);
+
+			gridPane.add(adminPage, 0, 0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+
+
+
+
+
+
+
+
+
 
 /*
     public void showMap(){
