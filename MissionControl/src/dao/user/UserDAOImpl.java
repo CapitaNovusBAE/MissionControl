@@ -33,7 +33,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		ResultSet rs = null;
 		try {
 
-			final String query = "SELECT * FROM users";
+			final String query = "SELECT * FROM users WHERE " + ACTIVE + "=" + true;
 
 			prs = conn.prepareStatement(query);
 			rs = prs.executeQuery();
