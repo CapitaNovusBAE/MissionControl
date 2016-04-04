@@ -1,11 +1,11 @@
-package view.home;
+package view.layout;
 
 import controller.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class HomeController {
+public class LayoutController {
 
 	@FXML
 	Button home;

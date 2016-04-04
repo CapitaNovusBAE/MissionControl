@@ -7,10 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.admin.AdminPageController;
-import view.home.HomeController;
+import view.layout.LayoutController;
 import view.signin.SignInController;
 
 public class MainApp extends Application {
@@ -18,14 +17,9 @@ public class MainApp extends Application {
     private Stage primaryStage, signInStage;
     private AnchorPane signInLayout;
     private BorderPane mainLayout;
-    private GridPane gridPane;
 
     @Override
     public void start(Stage primaryStage) {
-
-        gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("APPLICATION NAME TBC");
@@ -34,22 +28,20 @@ public class MainApp extends Application {
         this.signInStage.setTitle("Sign In");
 
         SignIn();
-
-        //showMap();
-        //showWaypointList();
-        //showWaypointPlacement();
     }
 
     public void SignIn(){
     	try{
-
+    		//LOAD FXML
     		FXMLLoader loader = new FXMLLoader();
     		loader.setLocation(MainApp.class.getResource("/view/signin/SignIn.fxml"));
     		signInLayout = (AnchorPane) loader.load();
 
+    		//CONTROLLER
     		SignInController controller = loader.getController();
     		controller.setMainApp(this);
 
+    		//SET SIGN IN SCENE
     		Scene scene = new Scene(signInLayout);
     		signInStage.setScene(scene);
     		signInStage.show();
@@ -59,21 +51,21 @@ public class MainApp extends Application {
     	}
     }
 
-    public void initializeHome() {
+    public void initLayout() {
         try {
+        	//HIDE SIGN IN WINDOW
+        	signInStage.hide();
 
+        	//LOAD FXML
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/view/home/Home.fxml"));
+            loader.setLocation(MainApp.class.getResource("/view/layout/Layout.fxml"));
             mainLayout = (BorderPane) loader.load();
 
-            mainLayout.setBottom(gridPane);
-
-            HomeController controller = loader.getController();
+            //CONTROLLER
+            LayoutController controller = loader.getController();
     		controller.setMainApp(this);
 
-            signInStage.hide();
-
-            // Show the scene containing the root layout.
+    		//SET MAIN SCENE
             Scene scene = new Scene(mainLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -82,6 +74,29 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+
+    public void navigationMenu(){
+    	try{
+    	//LOAD FXML
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("/view/layout/Layout.fxml"));
+        AnchorPane navigationBar = (AnchorPane) loader.load();
+        
+        //CONTROLLER
+        LayoutController controller = loader.getController();
+		controller.setMainApp(this);
+		
+		//PLACE IN SCENE
+		mainLayout.setLeft(navigationBar);
+		
+    	} catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
 	public void adminPage(){
 		try{
@@ -92,16 +107,12 @@ public class MainApp extends Application {
 			AdminPageController controller = loader.getController();
     		controller.setMainApp(this);
 
-			gridPane.add(adminPage, 0, 0);
+    		mainLayout.setBottom(adminPage);
+    		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-
-
-
-
 
 
 

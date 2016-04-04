@@ -76,7 +76,7 @@ public class MissionDAO extends AbstractDAO {
 		final Connection conn = getConnection();
 		boolean result = false;
 		try {
-			final String query = "INSERT INTO " + TABLE + "(" + TITLE + "," +  USERNAME + "," + POSITIONS + "," +  COMMENTS + ","+ DEPARTURE + "," + ARRIVAL + "," + ") VALUES (?,?,?,?,?,?);";
+			final String query = "INSERT INTO " + TABLE + "(" + TITLE + "," +  USERNAME + "," + POSITIONS + "," +  COMMENTS + ","+ DEPARTURE + "," + ARRIVAL  + ") VALUES (?,?,?,?,?,?);";
 			prs = conn.prepareStatement(query);
 			prs.setString(1, mission.getTittle());
 			prs.setString(2, mission.getUsername());
@@ -90,7 +90,7 @@ public class MissionDAO extends AbstractDAO {
 			e.printStackTrace();
 			result = false;
 		}
-		return result&&closeQuietly(conn)&&closeQuietly(prs);
+		return closeQuietly(conn)&&closeQuietly(prs)&&result;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class MissionDAO extends AbstractDAO {
 
 		try {
 			final String query = "UPDATE " + TABLE + " SET " + TITLE + "='" + mission.getTittle() + "', " + USERNAME + "='" + mission.getUsername() + "', " + POSITIONS
-					+ "='" + positionsToJson(mission.getPositions()) + "'" + COMMENTS +"='" + commentsListToString(mission.getComments()) + "'" + DEPARTURE + " = " + mission.getDepartureDate() + "," + ARRIVAL + " = " + mission.getArrivalDate() + "  WHERE " + ID + " = " + mission.getID();
+					+ "='" + positionsToJson(mission.getPositions()) + "', " + COMMENTS +"='" + commentsListToString(mission.getComments()) + "', " + DEPARTURE + "=" + mission.getDepartureDate() + ", " + ARRIVAL + "=" + mission.getArrivalDate() + "  WHERE " + ID + "=" + mission.getID();
 			prs = conn.prepareStatement(query);
 			result = prs.execute();
 		} catch (final Exception e) {
@@ -142,7 +142,7 @@ public class MissionDAO extends AbstractDAO {
 			result = false;
 		}
 
-		return result&&closeQuietly(conn)&&closeQuietly(prs);
+		return closeQuietly(conn)&&closeQuietly(prs)&&result;
 	}
 
 	/*
@@ -172,7 +172,7 @@ public class MissionDAO extends AbstractDAO {
 	 */
 	private List<Position> jsonToPosition(final String positionJson) {
 
-		final List<Position> coordinatesList = new ArrayList<Position>();
+		final List<Position> positionList = new ArrayList<Position>();
 		try {
 			final JSONArray arr = new JSONArray(positionJson);
 
@@ -192,12 +192,12 @@ public class MissionDAO extends AbstractDAO {
 				if (json_data.has("elevation")) {
 					elevation = json_data.getDouble("elevation");
 				}
-				coordinatesList.add(new Position(Angle.fromDegrees(latitude),Angle.fromDegrees(longitude), elevation));
+				positionList.add(new Position(Angle.fromDegrees(latitude),Angle.fromDegrees(longitude), elevation));
 			}
 		} catch (final JSONException e) {
 			e.printStackTrace();
 		}
-		return coordinatesList;
+		return positionList;
 	}
 
 	/*
