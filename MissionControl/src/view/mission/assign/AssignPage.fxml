@@ -10,7 +10,7 @@
         <tabs>
           <Tab text="Flight Path">
             <content>
-              <fx:include fx:id="flightPathPage" source="flightpath/FlightPathPage.fxml" />
+              <fx:include fx:id="flightPathPage" source="FlightPathPage.fxml" />
             </content>
           </Tab>
           <Tab text="Flight Details">

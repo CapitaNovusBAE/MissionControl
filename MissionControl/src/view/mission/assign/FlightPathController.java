@@ -1,4 +1,4 @@
-package view.assign.flightpath;
+package view.mission.assign;
 
 import java.net.URL;
 import java.util.ResourceBundle;

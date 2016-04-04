@@ -1,4 +1,4 @@
-package view.assign.flightdetails;
+package view.mission.assign;
 
 import java.net.URL;
 import java.util.ResourceBundle;

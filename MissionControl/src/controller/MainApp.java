@@ -145,11 +145,15 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	public void assignPage(){
-		System.out.println("Assign page selected");
+
+
+	/**
+	 * Load assign page
+	 */
+	public void loadAssignPage(){
 		try{
 			final FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("/view/assign/AssignPage.fxml"));
+			loader.setLocation(MainApp.class.getResource("/view/mission/assign/AssignPage.fxml"));
 			final AnchorPane page = (AnchorPane) loader.load();
 
 			this.mainLayout.setBottom(page);

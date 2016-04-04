@@ -32,7 +32,7 @@ public class NavigationMenuController {
 		if(event.getSource().equals(this.homeBtn)) {
 			this.mainApp.homePage();
 		} else if (event.getSource().equals(this.assignBtn)){
-			this.mainApp.assignPage();
+			this.mainApp.loadAssignPage();
 		} else if (event.getSource().equals(this.reviewBtn)){
 			//***********************
 			//***********************
