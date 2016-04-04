@@ -1,6 +1,6 @@
 /*
     Created on : 23-Mar-2016, 11:16:11
-    Author     : Novus_BAE
+    Author     : James Paul Novus_BAE
 */
 
 .label{
@@ -14,6 +14,9 @@
     -fx-min-width: 200;
 }
 
+/********************/
+/* GENERIC BUTTONS */
+/********************/
 .button{
     -fx-background-color:
         #707070,
@@ -33,6 +36,27 @@
         linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
 }
 
+/********************/
+/*NAVIGATION MENU*/
+/********************/
+#navMenu{
+	 -fx-background-color: #66ccff,
+	 linear-gradient(#ccddff, #001133);
+}
+
+#navMenuBtn{
+    -fx-background-color: transparent;
+    -fx-background-radius: 1;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+#navMenuBtn:hover{
+    -fx-background-color: rgba(0, 34, 102,0.2);
+}
+
+/********************/
+/*SIGN IN*/
+/********************/
 #signInTitle{
     -fx-font-size: 24px;
     -fx-font-family: "Arial Black";
@@ -43,4 +67,10 @@
     -fx-fill: FIREBRICK;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 0,0,0,1);
+}
+/********************/
+/**/
+/********************/
+#layout{
+	-fx-background-color: #CCCCCC;
 }

@@ -1,5 +1,10 @@
 package controller;
 
+/**
+ * Main controller for User Interfaces
+ * @author James Paul Novus BAE
+ */
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -8,8 +13,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import view.home.HomePageController;
 import view.admin.AdminPageController;
 import view.layout.LayoutController;
+import view.navigation.NavigationMenuController;
 import view.signin.SignInController;
 
 public class MainApp extends Application {
@@ -18,6 +25,7 @@ public class MainApp extends Application {
     private AnchorPane signInLayout;
     private BorderPane mainLayout;
 
+    //SET STAGES AND INITIALIZE SIGN IN
     @Override
     public void start(Stage primaryStage) {
 
@@ -30,6 +38,7 @@ public class MainApp extends Application {
         SignIn();
     }
 
+    //INITIALIZE SIGN IN STAGE
     public void SignIn(){
     	try{
     		//LOAD FXML
@@ -51,6 +60,7 @@ public class MainApp extends Application {
     	}
     }
 
+    //INITIALIZE PRIMARY STAGE LAYOUT
     public void initLayout() {
         try {
         	//HIDE SIGN IN WINDOW
@@ -70,6 +80,9 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            navigationMenu();
+            homePage();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,36 +92,54 @@ public class MainApp extends Application {
     	try{
     	//LOAD FXML
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApp.class.getResource("/view/layout/Layout.fxml"));
-        AnchorPane navigationBar = (AnchorPane) loader.load();
-        
+        loader.setLocation(MainApp.class.getResource("/view/navigation/NavigationMenu.fxml"));
+        AnchorPane navigationMenu = (AnchorPane) loader.load();
+
         //CONTROLLER
-        LayoutController controller = loader.getController();
+        NavigationMenuController controller = loader.getController();
 		controller.setMainApp(this);
-		
+
 		//PLACE IN SCENE
-		mainLayout.setLeft(navigationBar);
-		
+		mainLayout.setLeft(navigationMenu);
+
     	} catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void homePage(){
+    	try{
+        	//LOAD FXML
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/home/HomePage.fxml"));
+            AnchorPane homePage = (AnchorPane) loader.load();
 
+            //CONTROLLER
+            HomePageController controller = loader.getController();
+    		controller.setMainApp(this);
 
+    		//PLACE IN SCENE
+    		mainLayout.setCenter(homePage);
 
+        	} catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
 
 	public void adminPage(){
 		try{
+			//LOAD FXML
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/admin/AdminPage.fxml"));
 			AnchorPane adminPage = (AnchorPane) loader.load();
 
+			//CONTROLLER
 			AdminPageController controller = loader.getController();
     		controller.setMainApp(this);
 
-    		mainLayout.setBottom(adminPage);
-    		
+    		//PLACE IN SCENE
+    		mainLayout.setCenter(adminPage);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

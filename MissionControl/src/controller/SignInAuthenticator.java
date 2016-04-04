@@ -4,6 +4,11 @@ import java.sql.SQLException;
 import dao.user.User;
 import dao.user.UserDAOImpl;
 
+/**
+ * Authenticate Submitted Sign-In Details
+ * @author James Paul Novus BAE
+ */
+
 public class SignInAuthenticator {
 
 	private boolean loginStatus;

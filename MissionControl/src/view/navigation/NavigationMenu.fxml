@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="view.navigation.NavigationMenuController">
-	<!-- TODO Add Nodes -->
-</BorderPane>
+<AnchorPane id="navMenu" maxHeight="768.0" maxWidth="160.0" minHeight="768.0" minWidth="160.0" prefHeight="768.0" prefWidth="160.0" stylesheets="@../GlobalStyleSheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.navigation.NavigationMenuController">
+   <children>
+      <VBox alignment="TOP_CENTER" maxHeight="1000.0" maxWidth="200.0" minHeight="768.0" minWidth="200.0" prefHeight="768.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button id="navMenuBtn" fx:id="homeBtn" mnemonicParsing="false" onAction="#buttonPress" prefWidth="160.0" text="Home">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button id="navMenuBtn" fx:id="assignBtn" mnemonicParsing="false" onAction="#buttonPress" prefWidth="160.0" text="Assign Mission">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+            <Button id="navMenuBtn" fx:id="reviewBtn" mnemonicParsing="false" onAction="#buttonPress" prefWidth="160.0" text="Review Mission">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+            <Button id="navMenuBtn" fx:id="adminBtn" mnemonicParsing="false" onAction="#buttonPress" prefWidth="160.0" text="Admin Controls" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

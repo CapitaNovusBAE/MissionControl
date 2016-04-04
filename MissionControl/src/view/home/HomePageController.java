@@ -1,13 +1,13 @@
-package view.layout;
+package view.home;
 
 /**
- * Layout FXML Controller
+ * Home Page FXML Controller
  * @author James Paul Novus BAE
  */
 
 import controller.MainApp;
 
-public class LayoutController {
+public class HomePageController {
 
 	@SuppressWarnings("unused")
 	private MainApp mainApp;

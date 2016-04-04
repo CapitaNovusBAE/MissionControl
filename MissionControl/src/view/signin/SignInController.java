@@ -2,6 +2,11 @@ package view.signin;
 
 import java.sql.SQLException;
 
+/**
+ * Sign In FXML Controller
+ * @author James Paul Novus BAE
+ */
+
 import controller.SignInAuthenticator;
 import controller.MainApp;
 import javafx.event.ActionEvent;
@@ -57,11 +62,18 @@ public class SignInController{
         	 signInFailText.setText("Username or password incorrect."+"\n"+ (4 - signInAttempts) +" Attempts remaining");
          }
 
+         if(signInAttempts > 3){
+        	 System.exit(1);
+         }
+
 		 pwInput.setText("");
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
+
+		unInput.setText("Admin");
+		pwInput.setText("admin123");
 	}
 }
