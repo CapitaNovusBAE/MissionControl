@@ -27,24 +27,23 @@ public class NavigationMenuController {
 	private MainApp mainApp;
 
 	@FXML
-    private void buttonPress(ActionEvent event){
+	private void buttonPress(final ActionEvent event){
 
-    	if(event.getSource().equals(homeBtn)) {
-    		mainApp.homePage();
-    	} else if (event.getSource().equals(assignBtn)){
-    		//***********************
-    		//***********************
-    	} else if (event.getSource().equals(reviewBtn)){
-    		//***********************
-    		//***********************
-    	} else if (event.getSource().equals(adminBtn)){
-    		mainApp.adminPage();
-    	}
-    }
-
+		if(event.getSource().equals(this.homeBtn)) {
+			this.mainApp.homePage();
+		} else if (event.getSource().equals(this.assignBtn)){
+			this.mainApp.assignPage();
+		} else if (event.getSource().equals(this.reviewBtn)){
+			//***********************
+			//***********************
+		} else if (event.getSource().equals(this.adminBtn)){
+			this.mainApp.adminPage();
+		}
+	}
 
 
-	public void setMainApp(MainApp mainApp) {
+
+	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
 	}

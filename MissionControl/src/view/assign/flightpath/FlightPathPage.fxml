@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.SwingNode?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<SplitPane dividerPositions="0.7" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.assign.flightpath.FlightPathController">
+   <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2370.0" prefWidth="1383.0">
+         <children>
+            <SplitPane dividerPositions="0.6427" layoutX="495.0" layoutY="11.0" orientation="VERTICAL" prefHeight="766.0" prefWidth="974.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane>
+                     <children>
+                        <TitledPane text="Map">
+                           <content>
+                        		<SwingNode fx:id="mapView" />
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="266.0" prefWidth="971.0">
+                     <children>
+                        <TitledPane layoutX="10.399999618530273" layoutY="10.399999618530273" text="User input" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <SplitPane dividerPositions="0.5" prefHeight="269.0" prefWidth="972.0">
+                                <items>
+                                  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <GridPane layoutX="73.0" layoutY="48.0" prefHeight="161.0" prefWidth="301.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.66665649414062" minWidth="10.0" prefWidth="124.33332824707031" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6666717529297" minWidth="10.0" prefWidth="176.6666717529297" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Location" />
+                                                <TextField prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" />
+                                                <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" text="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <GridPane layoutX="86.0" layoutY="47.0" prefHeight="161.0" prefWidth="301.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.66665649414062" minWidth="10.0" prefWidth="124.33332824707031" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6666717529297" minWidth="10.0" prefWidth="176.6666717529297" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="elevation (rad)" GridPane.rowIndex="2" />
+                                                <TextField fx:id="latitude" onAction="#addWaypoint" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" />
+                                                <Button fx:id="addWaypointButton" mnemonicParsing="false" onAction="#addWaypoint" prefHeight="31.0" prefWidth="112.0" text="Add waypoint" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+                                                <Label text="longtitude (grad)" GridPane.rowIndex="1" />
+                                                <TextField fx:id="longtitude" onAction="#addWaypoint" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="latitude (grad)" />
+                                                <TextField fx:id="elevation" onAction="#addWaypoint" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </AnchorPane>
+      <TitledPane text="Waypoints" textAlignment="CENTER">
+         <content>
+      		<ListView fx:id="positionsView" minHeight="0.0" minWidth="0.0" prefHeight="766.0" prefWidth="382.0" />
+         </content>
+      </TitledPane>
+   </items>
+</SplitPane>
