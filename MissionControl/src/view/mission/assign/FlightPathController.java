@@ -3,8 +3,6 @@ package view.mission.assign;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import controller.MainApp;
-import dao.mission.Mission;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import javafx.collections.ObservableList;
@@ -20,10 +18,10 @@ import map.MapView;
  * @author Controller for
  *
  */
-public class FlightPathController implements Initializable{
+public class FlightPathController extends AssignPageController implements Initializable {
 
 	@FXML
-	private ListView<Position> positionsView;;
+	private ListView<Position> positionsView;
 
 	@FXML
 	private SwingNode mapNode;
@@ -40,21 +38,10 @@ public class FlightPathController implements Initializable{
 	@FXML
 	private Button addWaypointButton;;
 
-
-	private MainApp mainApp;
-
-	private Mission mission;
-
 	private MapView mapView;
-
-
-	public void setMainApp(final MainApp mainApp) {
-		this.mainApp = mainApp;
-	}
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
-		this.mission = new Mission("user", "Untitled");
 		this.mapView = new MapView();
 		this.mapNode.setContent(this.mapView.getMap());
 	}
@@ -66,16 +53,19 @@ public class FlightPathController implements Initializable{
 
 		this.mapView.getPositions().add(new Position(LatLon.fromDegrees(Double.parseDouble(this.latitude.getText()),Double.parseDouble(this.longtitude.getText())),Double.parseDouble(this.elevation.getText())));
 		this.mapView.updateView();
+
 		this.latitude.clear();
 		this.longtitude.clear();
 		this.elevation.clear();
+
 		updateView();
 	}
-
+	/**
+	 * Update ListView on map click
+	 */
 	public void updateView(){
 		final ObservableList<Position> positions = this.positionsView.getItems();
 		positions.clear();
 		positions.addAll(this.mapView.getPositions());
 	}
-
 }

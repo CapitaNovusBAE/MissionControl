@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import view.admin.AdminPageController;
 import view.home.HomePageController;
 import view.layout.LayoutController;
+import view.mission.assign.AssignPageController;
 import view.navigation.NavigationMenuController;
 import view.signin.SignInController;
 
@@ -166,6 +167,9 @@ public class MainApp extends Application {
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/mission/assign/AssignPage.fxml"));
 			final AnchorPane page = (AnchorPane) loader.load();
+
+			final AssignPageController controller = loader.getController();
+			controller.setUserName(getUser().getName());
 
 			this.mainLayout.setCenter(page);
 
