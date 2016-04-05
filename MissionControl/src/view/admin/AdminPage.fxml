@@ -115,7 +115,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <TextField prefWidth="200.0" promptText="Enter Username" />
+                                    <TextField fx:id="showUsername" prefWidth="200.0" promptText="Enter Username" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
@@ -125,7 +125,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <ComboBox fx:id="permissionBox1" prefWidth="200.0" promptText="Please Select" visibleRowCount="3" />
+                                    <ComboBox fx:id="showPermissions" prefWidth="200.0" promptText="Please Select" visibleRowCount="3" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -135,12 +135,12 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <PasswordField prefWidth="200.0" promptText="Enter Password" />
+                                    <PasswordField fx:id="showPassword" prefWidth="200.0" promptText="Enter Password" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
                                  <children>
-                                    <Button mnemonicParsing="false" prefWidth="120.0" text="Remove">
+                                    <Button fx:id="deleteUserBtn" mnemonicParsing="false" onAction="#removeUser" prefWidth="120.0" text="Remove">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin></Button>
@@ -158,7 +158,12 @@
                                     <Label text="Seach Users:" />
                                  </children>
                               </HBox>
-                              <TextField prefWidth="200.0" promptText="Enter Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="searchUsernames" prefWidth="200.0" promptText="Enter Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                                 <children>
+                                    <Text id="loginFailureText" fx:id="editUserAlert" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" percentWidth="-0.0" prefWidth="125.0" />
@@ -171,6 +176,7 @@
                               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>

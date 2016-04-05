@@ -36,11 +36,11 @@ public class MainApp extends Application {
 		this.signInStage = new Stage();
 		this.signInStage.setTitle("Sign In");
 
-		SignIn();
+		initializeSignIn();
 	}
 
 	//INITIALIZE SIGN IN STAGE
-	public void SignIn(){
+	public void initializeSignIn(){
 		try{
 			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
@@ -62,7 +62,7 @@ public class MainApp extends Application {
 	}
 
 	//INITIALIZE PRIMARY STAGE LAYOUT
-	public void initLayout() {
+	public void initalizeLayout() {
 		try {
 			//HIDE SIGN IN WINDOW
 			this.signInStage.hide();
@@ -81,15 +81,15 @@ public class MainApp extends Application {
 			this.primaryStage.setScene(scene);
 			this.primaryStage.show();
 
-			navigationMenu();
-			homePage();
+			loadNavigationMenu();
+			loadHomePage();
 
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void navigationMenu(){
+	public void loadNavigationMenu(){
 		try{
 			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
@@ -108,7 +108,7 @@ public class MainApp extends Application {
 		}
 	}
 
-	public void homePage(){
+	public void loadHomePage(){
 		try{
 			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
@@ -127,7 +127,7 @@ public class MainApp extends Application {
 		}
 	}
 
-	public void adminPage(){
+	public void loadAdminPage(){
 		try{
 			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();

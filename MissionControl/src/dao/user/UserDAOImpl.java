@@ -56,7 +56,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
 		return userList;
 	}
-	
+
 	  public String getPassword() throws SQLException{
 		  return this.PASSWORD;
 	  }

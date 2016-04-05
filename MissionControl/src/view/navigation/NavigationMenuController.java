@@ -30,18 +30,16 @@ public class NavigationMenuController {
 	private void buttonPress(final ActionEvent event){
 
 		if(event.getSource().equals(this.homeBtn)) {
-			this.mainApp.homePage();
+			this.mainApp.loadHomePage();
 		} else if (event.getSource().equals(this.assignBtn)){
 			this.mainApp.loadAssignPage();
 		} else if (event.getSource().equals(this.reviewBtn)){
 			//***********************
 			//***********************
 		} else if (event.getSource().equals(this.adminBtn)){
-			this.mainApp.adminPage();
+			this.mainApp.loadAdminPage();
 		}
 	}
-
-
 
 	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
