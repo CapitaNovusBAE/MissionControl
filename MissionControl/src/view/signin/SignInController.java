@@ -2,13 +2,14 @@ package view.signin;
 
 import java.sql.SQLException;
 
+import controller.MainApp;
+
 /**
  * Sign In FXML Controller
  * @author James Paul Novus BAE
  */
 
 import controller.SignInAuthenticator;
-import controller.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,49 +32,49 @@ public class SignInController{
 
 	int signInAttempts = 0;
 
-    @FXML
-    private void keyPress(ActionEvent event){
+	@FXML
+	private void keyPress(final ActionEvent event){
 
-    	if(event.getSource().equals(unInput)) {
-    		pwInput.requestFocus();
-    	} else if (event.getSource().equals(pwInput)){
-    		try {
+		if(event.getSource().equals(this.unInput)) {
+			this.pwInput.requestFocus();
+		} else if (event.getSource().equals(this.pwInput)){
+			try {
 				signInSubmit(event);
-			} catch (SQLException e) {
+			} catch (final SQLException e) {
 				e.printStackTrace();
 			}
-    	}
-    }
-
-	@FXML
-	private void signInSubmit(ActionEvent event) throws SQLException {
-
-		 String  usernameInput	= unInput.getText();
-         String  passwordInput	= pwInput.getText();
-         boolean signInStatus = false;
-
-         SignInAuthenticator authenticator = new SignInAuthenticator(usernameInput, passwordInput, mainApp);
-         signInStatus = authenticator.isLoginStatus();
-
-         if (signInStatus){
-        	 mainApp.initLayout();
-         } else {
-        	 if(signInAttempts < 4){signInAttempts++;}
-        	 signInFailText.setText("Username or password incorrect."+"\n"+ (4 - signInAttempts) +" Attempts remaining");
-         }
-
-         if(signInAttempts > 3){
-        	 System.exit(1);
-         }
-
-		 pwInput.setText("");
+		}
 	}
 
-	public void setMainApp(MainApp mainApp) {
+	@FXML
+	private void signInSubmit(final ActionEvent event) throws SQLException {
+
+		final String  usernameInput	= this.unInput.getText();
+		final String  passwordInput	= this.pwInput.getText();
+		boolean signInStatus = false;
+
+		final SignInAuthenticator authenticator = new SignInAuthenticator(usernameInput, passwordInput, this.mainApp);
+		signInStatus = authenticator.isLoginStatus();
+
+		if (signInStatus){
+			this.mainApp.initalizeLayout();
+		} else {
+			if(this.signInAttempts < 4){this.signInAttempts++;}
+			this.signInFailText.setText("Username or password incorrect."+"\n"+ (4 - this.signInAttempts) +" Attempts remaining");
+		}
+
+		if(this.signInAttempts > 3){
+			System.exit(1);
+		}
+
+		this.pwInput.setText("");
+	}
+
+	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
-		
-		unInput.setText("Admin");
-		pwInput.setText("admin123");
+
+		this.unInput.setText("Admin");
+		this.pwInput.setText("admin123");
 	}
 }

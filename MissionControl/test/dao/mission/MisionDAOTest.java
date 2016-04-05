@@ -157,4 +157,20 @@ public class MisionDAOTest {
 		Mockito.verify(this.missionDAO).closeQuietly(this.connection);
 		Mockito.verify(this.missionDAO).closeQuietly(this.ps);
 	}
+
+	/**
+	 * Test for {@link MissionDAO#delete(Mission)}
+	 * @throws SQLException
+	 */
+	@Test
+	public void testDelete() throws SQLException {
+		final Mission mission = new Mission(1,"user","mission 1",new ArrayList<Position>(),new ArrayList<>(),null,null);
+		Assert.assertEquals(true,this.missionDAO.delete(mission));
+
+		Mockito.verify(this.connection).prepareStatement("DELETE from missions WHERE id=1");
+		Mockito.verify(this.ps).execute();
+
+		Mockito.verify(this.missionDAO).closeQuietly(this.connection);
+		Mockito.verify(this.missionDAO).closeQuietly(this.ps);
+	}
 }

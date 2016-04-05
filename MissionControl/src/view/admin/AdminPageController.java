@@ -23,6 +23,8 @@ import javafx.scene.text.Text;
 
 public class AdminPageController {
 
+	UserDAOImpl ud = new UserDAOImpl();
+
 	@FXML
 	private TextField addUserUsername;
 	@FXML
@@ -34,91 +36,165 @@ public class AdminPageController {
 	@FXML
 	private Button addUserBtn;
 	@FXML
-	private Button searchUsersBtn;
-	@FXML
 	private Text missingFields;
 
-	private ObservableList<String> permissionLevels = FXCollections.observableArrayList("LOW", "MEDIUM", "HIGH");
+	@FXML
+	private Button searchUsersBtn;
+	@FXML
+	private TextField searchUsernames;
+	@FXML
+	private TextField showUsername;
+	@FXML
+	private PasswordField showPassword;
+	@FXML
+	private ComboBox<String> showPermissions;
+	@FXML
+	private Button deleteUserBtn;
+	@FXML
+	private Text editUserAlert;
+
+	private final ObservableList<String> permissionLevels = FXCollections.observableArrayList("LOW", "MEDIUM", "HIGH");
 
 	@SuppressWarnings("unused")
 	private MainApp mainApp;
 
-    @FXML
-    private void addUser(ActionEvent event){
+	@FXML
+	private void addUser(final ActionEvent event){
 
-    	boolean blankFields = false;
-    	boolean addUser = false;
+		boolean blankFields = false;
+		boolean addUser = true;
 
-    	List<String> missingElements = new ArrayList<String>();
+		final List<String> missingElements = new ArrayList<String>();
 
-    	missingFields.setText("");
+		this.missingFields.setText("");
 
-    	if(addUserUsername.getText().trim().isEmpty()){
-    		blankFields = true;
-    		missingElements.add("Username");
-    	}
-    	if(addUserPassword.getText().trim().isEmpty()){
-    		blankFields = true;
-    		missingElements.add("password");
-    	}
-    	if(addUserConfirmPassword.getText().trim().isEmpty()){
-    		blankFields = true;
-    		missingElements.add("confirm-password");
-    	}
-    	if(permissionBox.getValue() == null){
-    		blankFields = true;
-    		missingElements.add("permission-level");
-    	}
+		if(this.addUserUsername.getText().trim().isEmpty()){
+			blankFields = true;
+			missingElements.add("Username");
+		}
+		if(this.addUserPassword.getText().trim().isEmpty()){
+			blankFields = true;
+			missingElements.add("password");
+		}
+		if(this.addUserConfirmPassword.getText().trim().isEmpty()){
+			blankFields = true;
+			missingElements.add("confirm-password");
+		}
+		if(this.permissionBox.getValue() == null){
+			blankFields = true;
+			missingElements.add("permission-level");
+		}
 
-    	if(blankFields){
-    		//CHECK 1. ALERT ADMIN THAT BLANK FIELDS ARE PRESENT.
-    		missingFields.setText("Please fill in the missing fields:" + "\n" + missingElements);
-    	} else if(addUserPassword.getText().length() < 8){
-    		//CHECK 2. ALERT ADMIN THE PASSWORD IS NOT LONG ENOUGH.
-    		missingFields.setText("Password's must be at least 8 characters long.");
-        } else if (!addUserPassword.getText().equals(addUserConfirmPassword.getText())){
-        	//CHECK 3. ALERT ADMIN THE PASSWORDS DO NOT MATCH.
-        	missingFields.setText("Password's do not match.");
-    	} else {
-    		//INPUT FIELDS FILLED CORRECTLY.
-    		addUser = true;
-    	}
+		if(blankFields){
+			//CHECK 1. ALERT ADMIN THAT BLANK FIELDS ARE PRESENT.
+			this.missingFields.setText("Please fill in the missing fields:" + "\n" + missingElements);
+			return;
+		} else if(this.addUserPassword.getText().length() < 8){
+			//CHECK 2. ALERT ADMIN THE PASSWORD IS NOT LONG ENOUGH.
+			this.missingFields.setText("Password's must be at least 8 characters long.");
+			return;
+		} else if (!this.addUserPassword.getText().equals(this.addUserConfirmPassword.getText())){
+			//CHECK 3. ALERT ADMIN THE PASSWORDS DO NOT MATCH.
+			this.missingFields.setText("Password's do not match.");
+			return;
+		}
 
-    	//**********
-		String username = addUserUsername.getText();
-		String password = addUserPassword.getText();
-		String permLvl = permissionBox.getValue();
-		PermissionLevels lvl = PermissionLevels.valueOf(permLvl);
+		//SET VARIABLES BASED ON USER INPUT.
+		final String username = this.addUserUsername.getText();
+		final String password = this.addUserPassword.getText();
+		final String permLvl = this.permissionBox.getValue();
+		final PermissionLevels lvl = PermissionLevels.valueOf(permLvl);
+
+		//CHECK USERNAME IS NOT IN USE.
+		final User u = this.ud.getUser(username);
+
+		if(u != null){
+			addUser = false;
+			this.missingFields.setText("Username or password in use.");
+			return;
+		}
+
+		//CHECK PASSWORD IS NOT IN USE.
+		final List<User> ul = this.ud.getAllUsers();
+
+		for(int i=0; i< ul.size(); i++){
+			final User temp = ul.get(i);
+
+			final String up = temp.getPassword();
+
+			if(up.equals(password)){
+				addUser = false;
+				this.missingFields.setText("Username or password in use.");
+				return;
+			}
+		}
 
 		//**********
-    	UserDAOImpl ud = new UserDAOImpl();
-    	User u = ud.getUser(username);
-
-    	if(u != null){
-    		addUser = false;
-    		missingFields.setText("Username in use.");
-    	}
-
-    	// CHECK PASSWORDS <<<<<<<<<<<<<<<<---------------------------------
-
-    	//**********
 		if (addUser){
-			User user = new User(username, password, lvl, true);
-			ud.addUser(user);
-			missingFields.setText("User Added!");
-    	}
-    }
+			final User user = new User(username, password, lvl, true);
+			this.ud.addUser(user);
+			this.missingFields.setText("User Added!");
 
-    @FXML
-    private void searchUsers(){
-
-    }
-
-	public void initialize(){
-		permissionBox.setItems(permissionLevels);
+			this.addUserUsername.setText("");
+			this.addUserPassword.setText("");
+			this.addUserConfirmPassword.setText("");
+			this.permissionBox.setValue("");
+		}
 	}
 
-	public void setMainApp(MainApp mainApp) {
+	private boolean search = false;
+
+	// LOCK INPUT ON RIGHT HAND SIDE UNTIL SEARCH TAKES PLACE!!!!!
+	@FXML
+	private void searchUsers(){
+		final User u = this.ud.getUser(this.searchUsernames.getText());
+
+		if (u==null){
+			//ALERT USER ABOUT "NO USER FOUND". <<<<<<<<<<<<<-------------------
+			this.editUserAlert.setText("User not found.");
+			return;
+		}
+
+		this.showUsername.setEditable(true);
+		this.showPassword.setEditable(true);
+		this.showPermissions.setEditable(true);
+
+		this.showUsername.setText(u.getName());
+		this.showPassword.setText(u.getPassword());
+		this.showPermissions.setValue(u.getPermissionLevel().toString());
+
+		this.editUserAlert.setText("User found.");
+
+		this.search = true;
+	}
+
+	@FXML
+	private void removeUser(){
+
+		if(!this.search){
+			this.editUserAlert.setText("Search for user to remove.");
+			return;
+		}
+
+		this.ud.deleteUser(this.showUsername.getText());
+
+		this.showUsername.setText("");
+		this.showPassword.setText("");
+		this.showPermissions.setValue("");
+
+		this.editUserAlert.setText("User Removed.");
+	}
+
+	public void initialize(){
+		this.permissionBox.setItems(this.permissionLevels);
+		this.showPermissions.setItems(this.permissionLevels);
+
+		this.showUsername.setEditable(false);
+		this.showPassword.setEditable(false);
+		this.showPermissions.setEditable(false);
+	}
+
+	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
 	}

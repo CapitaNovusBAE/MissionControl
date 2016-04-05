@@ -1,10 +1,4 @@
 package controller;
-
-/**
- * Main controller for User Interfaces
- * @author James Paul Novus BAE
- */
-
 import java.io.IOException;
 
 import dao.user.User;
@@ -20,14 +14,17 @@ import view.layout.LayoutController;
 import view.navigation.NavigationMenuController;
 import view.signin.SignInController;
 
+/**
+ * Main controller for User Interfaces
+ * @author James Paul Novus BAE
+ */
 public class MainApp extends Application {
 
 	private Stage primaryStage, signInStage;
 	private AnchorPane signInLayout;
 	private BorderPane mainLayout;
 	private User user;
-
-	// SET STAGES AND INITIALIZE SIGN IN
+	//SET STAGES AND INITIALIZE SIGN IN
 	@Override
 	public void start(final Stage primaryStage) {
 
@@ -37,22 +34,24 @@ public class MainApp extends Application {
 		this.signInStage = new Stage();
 		this.signInStage.setTitle("Sign In");
 
-		SignIn();
+		initializeSignIn();
 	}
 
-	// INITIALIZE SIGN IN STAGE
-	public void SignIn() {
-		try {
-			// LOAD FXML
+	/**
+	 * INITIALIZE SIGN IN STAGE
+	 */
+	public void initializeSignIn(){
+		try{
+			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/signin/SignIn.fxml"));
 			this.signInLayout = (AnchorPane) loader.load();
 
-			// CONTROLLER
+			//CONTROLLER
 			final SignInController controller = loader.getController();
 			controller.setMainApp(this);
 
-			// SET SIGN IN SCENE
+			//SET SIGN IN SCENE
 			final Scene scene = new Scene(this.signInLayout);
 			this.signInStage.setScene(scene);
 			this.signInStage.show();
@@ -62,46 +61,51 @@ public class MainApp extends Application {
 		}
 	}
 
-	// INITIALIZE PRIMARY STAGE LAYOUT
-	public void initLayout() {
+	/**
+	 * INITIALIZE PRIMARY STAGE LAYOU
+	 */
+	public void initalizeLayout() {
 		try {
-			// HIDE SIGN IN WINDOW
+			//HIDE SIGN IN WINDOW
 			this.signInStage.hide();
 
-			// LOAD FXML
+			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/layout/Layout.fxml"));
 			this.mainLayout = (BorderPane) loader.load();
 
-			// CONTROLLER
+			//CONTROLLER
 			final LayoutController controller = loader.getController();
 			controller.setMainApp(this);
 
-			// SET MAIN SCENE
+			//SET MAIN SCENE
 			final Scene scene = new Scene(this.mainLayout);
 			this.primaryStage.setScene(scene);
 			this.primaryStage.show();
 
-			navigationMenu();
-			homePage();
+			loadNavigationMenu();
+			loadHomePage();
 
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void navigationMenu() {
-		try {
-			// LOAD FXML
+	/**
+	 * Load navigation menu
+	 */
+	public void loadNavigationMenu(){
+		try{
+			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/navigation/NavigationMenu.fxml"));
 			final AnchorPane navigationMenu = (AnchorPane) loader.load();
 
-			// CONTROLLER
+			//CONTROLLER
 			final NavigationMenuController controller = loader.getController();
 			controller.setMainApp(this);
 
-			// PLACE IN SCENE
+			//PLACE IN SCENE
 			this.mainLayout.setLeft(navigationMenu);
 
 		} catch (final IOException e) {
@@ -109,18 +113,21 @@ public class MainApp extends Application {
 		}
 	}
 
-	public void homePage() {
-		try {
-			// LOAD FXML
+	/**
+	 * Load Home page
+	 */
+	public void loadHomePage(){
+		try{
+			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/home/HomePage.fxml"));
 			final AnchorPane homePage = (AnchorPane) loader.load();
 
-			// CONTROLLER
+			//CONTROLLER
 			final HomePageController controller = loader.getController();
 			controller.setMainApp(this);
 
-			// PLACE IN SCENE
+			//PLACE IN SCENE
 			this.mainLayout.setCenter(homePage);
 
 		} catch (final IOException e) {
@@ -128,19 +135,39 @@ public class MainApp extends Application {
 		}
 	}
 
-	public void adminPage() {
-		try {
-			// LOAD FXML
+	/**
+	 * Load Admin page
+	 */
+	public void loadAdminPage(){
+		try{
+			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/admin/AdminPage.fxml"));
 			final AnchorPane adminPage = (AnchorPane) loader.load();
 
-			// CONTROLLER
+			//CONTROLLER
 			final AdminPageController controller = loader.getController();
 			controller.setMainApp(this);
 
-			// PLACE IN SCENE
+			//PLACE IN SCENE
 			this.mainLayout.setCenter(adminPage);
+
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * Load assign page
+	 */
+	public void loadAssignPage(){
+		try{
+			final FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("/view/mission/assign/AssignPage.fxml"));
+			final AnchorPane page = (AnchorPane) loader.load();
+
+			this.mainLayout.setCenter(page);
 
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -150,31 +177,41 @@ public class MainApp extends Application {
 	/**
 	 * Load assign page
 	 */
-	public void loadAssignPage() {
-		try {
+	public void loadReviewPage(){
+		try{
 			final FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("/view/mission/assign/AssignPage.fxml"));
+			loader.setLocation(MainApp.class.getResource("/view/mission/review/ReviewPage.fxml"));
 			final AnchorPane page = (AnchorPane) loader.load();
 
-			this.mainLayout.setBottom(page);
+			this.mainLayout.setCenter(page);
 
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public User getUser() {
+	/**
+	 * @return logged in user
+	 */
+	public User getUser(){
 		return this.user;
 	}
 
-	public void setUser(User u) {
-		this.user = u;
+	/**
+	 * @param user logged in user
+	 */
+	public void setUser(final User user){
+		this.user = user;
 	}
-
+	/**
+	 * @return primary stage
+	 */
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
 
+	/**run application
+	 * @param args
+	 */
 	public static void main(final String[] args) {
 		launch(args);
 	}

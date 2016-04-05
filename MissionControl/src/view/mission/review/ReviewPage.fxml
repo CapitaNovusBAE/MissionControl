@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.admin.AdminPageController">
+<AnchorPane prefHeight="768.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mission.review.ReviewPageController">
    <children>
       <TabPane layoutX="115.0" layoutY="34.0" prefHeight="768.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -31,7 +31,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TextField fx:id="txtMissionID" prefHeight="25.0" prefWidth="604.0" promptText="Enter Mission ID" />
+                              <TextField fx:id="txtMissionID" onAction="#findMission" prefHeight="25.0" prefWidth="604.0" promptText="Enter Mission ID" />
                               <Button fx:id="btnFindMission" mnemonicParsing="false" onAction="#findMission" text="Find Mission" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
@@ -39,16 +39,11 @@
                      <center>
                         <SplitPane dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="707.0" prefWidth="943.0">
-                                 <children>
-                                    <SwingNode />
-                                    <TitledPane animated="false" layoutX="34.0" layoutY="30.0" prefHeight="547.0" prefWidth="952.0" text="Map" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                      </content>
-                                    </TitledPane>
-                                 </children>
-                              </AnchorPane>
+                              <TitledPane animated="false" prefHeight="547.0" prefWidth="952.0" text="Map">
+                                 <content>
+                                    <SwingNode fx:id="mapNode" />
+                                 </content>
+                              </TitledPane>
                               <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="707.0" prefWidth="955.0">
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

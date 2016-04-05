@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
 import dao.user.User;
 import dao.user.UserDAOImpl;
 
@@ -13,35 +12,38 @@ public class SignInAuthenticator {
 
 	private boolean loginStatus;
 
-	public SignInAuthenticator(String usernameInput, String passwordInput, MainApp mainApp) throws SQLException{
-
-		this.setLoginStatus(compareDetails(usernameInput, passwordInput, mainApp));
-		
+	/**Constructor
+	 * @param usernameInput - User name
+	 * @param passwordInput -User password
+	 * @param mainApp Main - application
+	 */
+	public SignInAuthenticator(final String usernameInput, final String passwordInput, final MainApp mainApp){
+		setLoginStatus(compareDetails(usernameInput, passwordInput, mainApp));
 	}
 
-	private boolean compareDetails(String usernameInput, String passwordInput, MainApp mainApp) throws SQLException{
+	private boolean compareDetails(final String usernameInput, final String passwordInput, final MainApp mainApp){
 		boolean isCorrect = false;
+		final UserDAOImpl ud = new UserDAOImpl();
+		final User u = ud.getUser(usernameInput);
 
-		UserDAOImpl ud = new UserDAOImpl();
-		User u = ud.getUser(usernameInput);
-		
-		System.out.println(u);
-
-		if(u == null){ return false; }
-
-        if (usernameInput.equals(u.getName())){
-            isCorrect = passwordInput.equals(u.getPassword());
-            mainApp.setUser(u);
-        }
-
-        return isCorrect;
+		if (u != null&&usernameInput.equals(u.getName())){
+			isCorrect = passwordInput.equals(u.getPassword());
+			mainApp.setUser(u);
+		}
+		return isCorrect;
 	}
 
+	/**
+	 * @return login status
+	 */
 	public boolean isLoginStatus() {
-		return loginStatus;
+		return this.loginStatus;
 	}
 
-	public void setLoginStatus(boolean loginStatus) {
+	/**
+	 * @param loginStatus
+	 */
+	public void setLoginStatus(final boolean loginStatus) {
 		this.loginStatus = loginStatus;
 	}
 }

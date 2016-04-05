@@ -125,6 +125,26 @@ public class MissionDAO extends AbstractDAO {
 
 	/**
 	 * @param mission  {@link Mission}
+	 * @return true if delete, otherwise false
+	 */
+	public boolean delete(final Mission mission) {
+		final Connection conn = getConnection();
+		PreparedStatement prs = null;
+		boolean result = false;
+		try {
+			final String query = "DELETE from " + TABLE + " WHERE " + ID + "=" + mission.getID();
+			prs = conn.prepareStatement(query);
+			result = prs.execute();
+		} catch (final Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return closeQuietly(conn)&&closeQuietly(prs)&&result;
+	}
+
+
+	/**
+	 * @param mission  {@link Mission}
 	 * @return true if updated, otherwise false
 	 */
 	public boolean update(final Mission mission) {
