@@ -13,23 +13,25 @@ public class SignInAuthenticator {
 
 	private boolean loginStatus;
 
-	public SignInAuthenticator(String usernameInput, String passwordInput) throws SQLException{
+	public SignInAuthenticator(String usernameInput, String passwordInput, MainApp mainApp) throws SQLException{
 
-		this.setLoginStatus(compareDetails(usernameInput, passwordInput));
+		this.setLoginStatus(compareDetails(usernameInput, passwordInput, mainApp));
+		
 	}
 
-	private boolean compareDetails(String usernameInput, String passwordInput) throws SQLException{
+	private boolean compareDetails(String usernameInput, String passwordInput, MainApp mainApp) throws SQLException{
 		boolean isCorrect = false;
 
 		UserDAOImpl ud = new UserDAOImpl();
 		User u = ud.getUser(usernameInput);
-
+		
 		System.out.println(u);
 
 		if(u == null){ return false; }
 
         if (usernameInput.equals(u.getName())){
             isCorrect = passwordInput.equals(u.getPassword());
+            mainApp.setUser(u);
         }
 
         return isCorrect;

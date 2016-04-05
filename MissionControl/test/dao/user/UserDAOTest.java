@@ -89,7 +89,7 @@ public class UserDAOTest {
 		final User user = new User("user", "password", PermissionLevels.MEDIUM, true);
 		Assert.assertEquals(true, this.userDAO.addUser(user));
 		Mockito.verify(this.connection)
-				.prepareStatement("INSERT INTO users(permissionLevel,username,password) VALUES (?,?,?);");
+				.prepareStatement("INSERT INTO users (permissionLevel,username,password) VALUES (?,?,?);");
 		Mockito.verify(this.ps).setString(1, "MEDIUM");
 		Mockito.verify(this.ps).setString(2, "user");
 		Mockito.verify(this.ps).setString(3, "password");

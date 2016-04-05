@@ -52,11 +52,11 @@ public class SignInController{
          String  passwordInput	= pwInput.getText();
          boolean signInStatus = false;
 
-         SignInAuthenticator authenticator = new SignInAuthenticator(usernameInput, passwordInput);
+         SignInAuthenticator authenticator = new SignInAuthenticator(usernameInput, passwordInput, mainApp);
          signInStatus = authenticator.isLoginStatus();
 
          if (signInStatus){
-        	 mainApp.initalizeLayout();
+        	 mainApp.initLayout();
          } else {
         	 if(signInAttempts < 4){signInAttempts++;}
         	 signInFailText.setText("Username or password incorrect."+"\n"+ (4 - signInAttempts) +" Attempts remaining");
@@ -72,7 +72,7 @@ public class SignInController{
 	public void setMainApp(MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
-
+		
 		unInput.setText("Admin");
 		pwInput.setText("admin123");
 	}
