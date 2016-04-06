@@ -15,7 +15,7 @@
           </Tab>
           <Tab fx:id="flighDetailsTab" onCloseRequest="#updateMission" onClosed="#updateMission" onSelectionChanged="#updateMission" text="Flight Details">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               <fx:include fx:id="flighDetails" source="FlightDetails.fxml" />
             </content>
           </Tab>
             <Tab text="Review/Confirm">

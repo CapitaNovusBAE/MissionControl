@@ -3,7 +3,8 @@ package view.mission.assign;
 import dao.mission.Mission;
 import dao.mission.MissionDAO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 /**
  * @author Controller for
@@ -15,6 +16,7 @@ public class AssignPageController{
 	private Tab flightPathTab;
 	@FXML
 	private Tab flighDetailsTab;
+	
 
 	private Mission mission;
 	private MissionDAO mdao;
