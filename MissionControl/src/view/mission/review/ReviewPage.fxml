@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mission.review.ReviewPageController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mission.review.ReviewPageController">
    <children>
       <TabPane layoutX="115.0" layoutY="34.0" prefHeight="768.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -39,9 +39,9 @@
                      <center>
                         <SplitPane dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <items>
-                              <TitledPane animated="false" prefHeight="547.0" prefWidth="952.0" text="Map">
+                              <TitledPane animated="false" onMouseClicked="#updateView" prefHeight="547.0" prefWidth="952.0" text="Map">
                                  <content>
-                                    <SwingNode fx:id="mapNode" />
+                                    <SwingNode fx:id="mapNode" onMouseReleased="#updateView" />
                                  </content>
                               </TitledPane>
                               <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="707.0" prefWidth="955.0">
@@ -59,7 +59,10 @@
                                        <children>
                                           <TitledPane animated="false" layoutX="104.0" layoutY="59.0" prefHeight="349.0" prefWidth="953.0" text="Waypoints" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <content>
-                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <ListView fx:id="lstPositions" prefHeight="240.0" prefWidth="323.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children></AnchorPane>
                                             </content>
                                           </TitledPane>
                                        </children>

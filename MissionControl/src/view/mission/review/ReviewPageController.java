@@ -2,21 +2,21 @@ package view.mission.review;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import controller.MainApp;
 import dao.mission.Mission;
 import dao.mission.MissionDAO;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
 import map.MapView;
 
 public class ReviewPageController implements Initializable {
@@ -47,31 +47,44 @@ public class ReviewPageController implements Initializable {
 
 	private MapView mapView;
 
+	private static final long DELAY= 100;
 
 	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
 	}
 
+	/**
+	 * Action on add comment button click
+	 */
 	public void addComment(){
 
 	}
 
 
+	/**
+	 * Action on find mission button click
+	 */
 	public void findMission(){
 		this.mission = this.mdao.get(Integer.parseInt(this.txtMissionID.getText()));
 		addWaypoints();
 	}
 
 
+	/**
+	 * Action on delete mission click
+	 */
 	public void deleteMission(){
 		this.mdao.delete(this.mission);
 	}
 
 
+	/**
+	 * Action on update button click
+	 */
 	public void updateMission(){
 		this.mission.getPositions().clear();
-		this.mission.getPositions().addAll(mapView.getPositions());
+		this.mission.getPositions().addAll(this.mapView.getPositions());
 		this.mdao.update(this.mission);
 	}
 
@@ -82,22 +95,30 @@ public class ReviewPageController implements Initializable {
 		this.mapNode.setContent(this.mapView.getMap());
 	}
 
+	/**
+	 * Add positions to the map from mission
+	 */
 	public void addWaypoints(){
-
-		this.mapView.getPositions().addAll(mission.getPositions());		
-		this.mapView.updateView();		
-		synchronized (this.mapView.getLock()) {
-
-			updateView();
-		}
+		this.mapView.getPositions().addAll(this.mission.getPositions());
+		this.mapView.updateView();
+		updateView();
 	}
 	/**
 	 * Update ListView on map click
 	 */
-	public void  updateView(){
-		final ObservableList<Position> positions = this.lstPositions.getItems();
-		positions.clear();
-		System.out.println(" in review control" +mapView.getPositions().size());
-		positions.addAll(this.mapView.getPositions());
+	public void updateView(){
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						final ObservableList<Position> positions = ReviewPageController.this.lstPositions.getItems();
+						positions.clear();
+						positions.addAll(ReviewPageController.this.mapView.getPositions());
+					}
+				});
+			}
+		}, DELAY);
 	}
 }

@@ -25,32 +25,20 @@ import gov.nasa.worldwind.util.BasicDragger;
 public class MapView  {
 
 	private RenderableLayer layer;
-	private List<Position> mousePositionOnMap;
-	private Position pickedPosition;
+	private final List<Position> mousePositionOnMap = new LinkedList<>();
 	private WorldWindowGLJPanel worldWindPanel;
-	/**
-	 * Flag to indicate something was selected
-	 */
-	public static boolean selected = false;
 
-	private Object lock = new Object();
-
-public Object getLock(){
-	return this.lock;
-}
 	/**
 	 * Constructor
 	 */
 	public MapView() {
-		this.mousePositionOnMap = new LinkedList<>();
 	}
 
 	/**
 	 * @return all postions on the map
 	 */
 	public List<Position> getPositions(){
-				return this.mousePositionOnMap;
-
+		return this.mousePositionOnMap;
 	}
 	/**
 	 * @return JPanel with {@link WorldWindowGLJPanel}
@@ -68,8 +56,8 @@ public Object getLock(){
 		// for now layer shared with others so screen has only one layer on top
 		// Create one set of layers.
 
-		layer = new RenderableLayer();
-		this.worldWindPanel.getModel().getLayers().add(layer);
+		this.layer = new RenderableLayer();
+		this.worldWindPanel.getModel().getLayers().add(this.layer);
 		// adding mouse listener to window
 		// create an instance of the dragger and give it a WWJ instance to use
 
@@ -85,42 +73,41 @@ public Object getLock(){
 	 */
 	private MouseAdapter getMouseListener(){
 		return new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(final MouseEvent pE) {
 				// getting position from current mouse click
 
 				final Position mouseCurrentPosition = MapView.this.worldWindPanel.getCurrentPosition();
 
+
 				// Making sure that not adding null positions and the same
 				// position again
-				if (mouseCurrentPosition != null && !(MapView.this.mousePositionOnMap.contains(mouseCurrentPosition))&& pE.getButton() == MouseEvent.BUTTON1) {
+				if (mouseCurrentPosition != null && !MapView.this.mousePositionOnMap.contains(mouseCurrentPosition)&& pE.getButton() == MouseEvent.BUTTON1) {
 					// after null check to make sure coordinates are not null
 					// avoiding null point exceptions
-					synchronized (lock) {
-						// creating list of position from map
-						mousePositionOnMap.add(mouseCurrentPosition);
-					}
 
+					// creating list of position from map
+					MapView.this.mousePositionOnMap.add(mouseCurrentPosition);
 
 					// adding select listener to window
 					MapView.this.worldWindPanel.getInputHandler().addSelectListener(new SelectListener() {
 						// running method if for selection
 						@Override
 						public void selected(final SelectEvent event) {
-
+							Position pickedPosition = null;
 							// checking what is selected
 							if (event.getEventAction().equals(SelectEvent.HOVER) && event.hasObjects()
 									&& event.getTopObject() instanceof PointPlacemark) {
 								// logic what to do after selection is finished
 								final Object topObject = event.getTopObject();
 								final String	 giveEvent = event.getEventAction();
-								final boolean give = MapView.this.mousePositionOnMap.contains(MapView.this.pickedPosition);
+								final boolean give = MapView.this.mousePositionOnMap.contains(pickedPosition);
 								new Interaction(topObject,giveEvent,MapView.this.mousePositionOnMap,give);
-
 								final PointPlacemark hoveredPointPlacemark = (PointPlacemark) event.getTopObject();
 
-								MapView.this.pickedPosition = hoveredPointPlacemark.getPosition();
-								System.out.println(MapView.this.mousePositionOnMap.contains(MapView.this.pickedPosition));
+								pickedPosition = hoveredPointPlacemark.getPosition();
+								//								System.out.println(MapView.this.mousePositionOnMap.contains(pickedPosition));
 
 							} // ends logic for first type (if) statement
 
@@ -129,21 +116,18 @@ public Object getLock(){
 								// this ensures you get the one that was really clicked on
 
 								final Position dragEndPosition = MapView.this.worldWindPanel.getCurrentPosition();
-								removeFromListAfterAction(MapView.this.mousePositionOnMap, MapView.this.pickedPosition, dragEndPosition);
-								Object dragObject = event.getTopObject();
+								removeFromListAfterAction(MapView.this.mousePositionOnMap, pickedPosition, dragEndPosition);
 
-								dragObject = null;
-
-								System.out.println("Drag start   " + MapView.this.pickedPosition);
-								layer.dispose();
+								System.out.println("Drag start   " + pickedPosition);
+								MapView.this.layer.dispose();
 								updateView();
-								MapView.this.worldWindPanel.getModel().getLayers().add(layer);
+								MapView.this.worldWindPanel.getModel().getLayers().add(MapView.this.layer);
 							}
 
 							if (event.getEventAction().equals(SelectEvent.RIGHT_CLICK)) {
+								removeFromListAfterScreen(MapView.this.mousePositionOnMap, pickedPosition);
 
-								removeFromListAfterScreen(MapView.this.mousePositionOnMap, MapView.this.pickedPosition);
-								layer.dispose();
+								MapView.this.layer.dispose();
 								updateView();
 								System.out.println("Removed succ");
 							}
@@ -166,7 +150,7 @@ public Object getLock(){
 					System.out.println("Current Pos= " + mouseCurrentPosition);
 					updateView();
 
-					//MapView.this.worldWindPanel.getModel().getLayers().add(layer);
+					MapView.this.worldWindPanel.getModel().getLayers().add(MapView.this.layer);
 
 				} // ends if loop if position is not null
 
@@ -175,29 +159,26 @@ public Object getLock(){
 					System.out.println("NOTHING added this position is on list, or other reason");
 
 				} // ends else loop it position is null
-
 			}// ends click event
 
 		};
 	}
 	private void drawPolyLines() {
-		if (this.mousePositionOnMap.size() > 1) {
-			final Polyline polyline = new Polyline(this.mousePositionOnMap);
+		synchronized (this.mousePositionOnMap) {
+			if (this.mousePositionOnMap.size() > 1) {
+				final Polyline polyline = new Polyline(this.mousePositionOnMap);
 
-			polyline.setColor(Color.RED);
-			polyline.setLineWidth(2);
-			layer.addRenderable(polyline);
+				polyline.setColor(Color.RED);
+				polyline.setLineWidth(2);
+				this.layer.addRenderable(polyline);
+			}
 		}
-
 	}
 
 	private void drawMarkers() {
-		System.out.println(mousePositionOnMap.size());
 		for (final Position pos : this.mousePositionOnMap) {
 			final PointPlacemark pointPlacemarkOnMapList = new PointPlacemark(pos);
-			layer.addRenderable(pointPlacemarkOnMapList);
-
-
+			this.layer.addRenderable(pointPlacemarkOnMapList);
 		}
 	}
 
@@ -207,9 +188,6 @@ public Object getLock(){
 	public void updateView(){
 		drawMarkers();
 		drawPolyLines();
-		if(!this.worldWindPanel.getModel().getLayers().contains(layer)){
-			this.worldWindPanel.getModel().getLayers().add(layer);
-		}
 	}
 
 	private List<Position> removeFromListAfterAction(final List<Position> list, final Position pick, final Position end) {
@@ -231,7 +209,5 @@ public Object getLock(){
 
 		return this.mousePositionOnMap;
 	}
-
-
 
 }// ends first view class

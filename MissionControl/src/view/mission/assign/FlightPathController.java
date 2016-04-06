@@ -2,9 +2,12 @@ package view.mission.assign;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
@@ -19,6 +22,8 @@ import map.MapView;
  *
  */
 public class FlightPathController extends AssignPageController implements Initializable {
+
+	private static final long DELAY = 100;
 
 	@FXML
 	private ListView<Position> positionsView;
@@ -64,8 +69,18 @@ public class FlightPathController extends AssignPageController implements Initia
 	 * Update ListView on map click
 	 */
 	public void updateView(){
-		final ObservableList<Position> positions = this.positionsView.getItems();
-		positions.clear();
-		positions.addAll(this.mapView.getPositions());
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						final ObservableList<Position> positions = FlightPathController.this.positionsView.getItems();
+						positions.clear();
+						positions.addAll(FlightPathController.this.mapView.getPositions());
+					}
+				});
+			}
+		}, DELAY);
 	}
 }
