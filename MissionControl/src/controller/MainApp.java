@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.IOException;
 
 import dao.user.User;
@@ -16,8 +17,8 @@ import view.navigation.NavigationMenuController;
 import view.signin.SignInController;
 
 /**
- * Main controller for User Interfaces
- * @author James Paul Novus BAE
+ * Main class controller for user interfaces.
+ * @author James Paul.
  */
 public class MainApp extends Application {
 
@@ -25,8 +26,7 @@ public class MainApp extends Application {
 	private AnchorPane signInLayout;
 	private BorderPane mainLayout;
 	private User user;
-	//SET STAGES AND INITIALIZE SIGN IN
-	@Override
+
 	public void start(final Stage primaryStage) {
 
 		this.primaryStage = primaryStage;
@@ -39,7 +39,8 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * INITIALIZE SIGN IN STAGE
+	 * Initialise the sign in stage.
+	 * Called from constructor on app start.
 	 */
 	public void initializeSignIn(){
 		try{
@@ -63,7 +64,8 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * INITIALIZE PRIMARY STAGE LAYOU
+	 * Initialise layout for main stage.
+	 * Called from SignInController upon successful sign in.
 	 */
 	public void initalizeLayout() {
 		try {
@@ -93,7 +95,8 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Load navigation menu
+	 * Load navigation menu into the left border pane of main stage layout.
+	 * Called upon initialisation of main stage layout.
 	 */
 	public void loadNavigationMenu(){
 		try{
@@ -115,7 +118,9 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Load Home page
+	 * Load home page menu into the centre border pane of main stage layout.
+	 * Called upon initialisation of main stage layout.
+	 * Called upon press of the home button in NavigationMenuController.
 	 */
 	public void loadHomePage(){
 		try{
@@ -137,7 +142,8 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Load Admin page
+	 * Load administration page menu into the centre border pane of main stage layout.
+	 * Called upon press of the administration button in NavigationMenuController.
 	 */
 	public void loadAdminPage(){
 		try{
@@ -146,7 +152,7 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("/view/admin/AdminPage.fxml"));
 			final AnchorPane adminPage = (AnchorPane) loader.load();
 
-			//CONTROLLER
+
 			final AdminPageController controller = loader.getController();
 			controller.setMainApp(this);
 
@@ -160,17 +166,21 @@ public class MainApp extends Application {
 
 
 	/**
-	 * Load assign page
+	 * Load assign mission page menu into the centre border pane of main stage layout.
+	 * Called upon press of the assign button in NavigationMenuController.
 	 */
 	public void loadAssignPage(){
 		try{
+			//LOAD FXML
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("/view/mission/assign/AssignPage.fxml"));
 			final AnchorPane page = (AnchorPane) loader.load();
 
+			//CONTROLLER
 			final AssignPageController controller = loader.getController();
 			controller.setUserName(getUser().getName());
 
+			//PLACE IN SCENE
 			this.mainLayout.setCenter(page);
 
 		} catch (final IOException e) {
@@ -179,7 +189,8 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Load assign page
+	 * Load review mission page menu into the centre border pane of main stage layout.
+	 * Called upon press of the review button in NavigationMenuController.
 	 */
 	public void loadReviewPage(){
 		try{
@@ -193,28 +204,31 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
+
 	/**
-	 * @return logged in user
+	 * @return logged in user.
 	 */
 	public User getUser(){
 		return this.user;
 	}
 
 	/**
-	 * @param user logged in user
+	 * @param user - set to logged in user.
 	 */
 	public void setUser(final User user){
 		this.user = user;
 	}
+
 	/**
-	 * @return primary stage
+	 * @return primary stage.
 	 */
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
 
-	/**run application
-	 * @param args
+	/**
+	 * run application
+	 * @param args default parameter for main.
 	 */
 	public static void main(final String[] args) {
 		launch(args);

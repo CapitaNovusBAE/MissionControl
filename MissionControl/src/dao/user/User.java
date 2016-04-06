@@ -31,9 +31,9 @@ public class User {
 	}
 
 	/**Constructor
-	 * @param userName
-	 * @param password
-	 * @param pLevel
+	 * @param userName User name
+	 * @param password User password
+	 * @param pLevel User permission level
 	 * @param active
 	 *	 */
 	public User(final String userName, final String password, final PermissionLevels pLevel, final boolean active) {

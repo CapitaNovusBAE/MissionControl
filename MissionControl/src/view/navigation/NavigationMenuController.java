@@ -1,26 +1,22 @@
 package view.navigation;
 
-/**
- * Navigation Menu FXML Controller
- * @author James Paul Novus BAE
- */
-
 import controller.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+/**
+ * Navigation Menu FXML Controller
+ * @author James Paul
+ */
 public class NavigationMenuController {
 
 	@FXML
 	Button homeBtn;
-
 	@FXML
 	Button assignBtn;
-
 	@FXML
 	Button reviewBtn;
-
 	@FXML
 	Button adminBtn;
 
@@ -28,7 +24,6 @@ public class NavigationMenuController {
 
 	@FXML
 	private void buttonPress(final ActionEvent event){
-
 		if(event.getSource().equals(this.homeBtn)) {
 			this.mainApp.loadHomePage();
 		} else if (event.getSource().equals(this.assignBtn)){
@@ -40,8 +35,9 @@ public class NavigationMenuController {
 		}
 	}
 
-
-
+	/**
+	 * @param mainApp - link to MainApp.
+	 */
 	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;

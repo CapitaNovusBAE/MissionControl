@@ -4,18 +4,18 @@ import dao.user.User;
 import dao.user.UserDAOImpl;
 
 /**
- * Authenticate Submitted Sign-In Details
- * @author James Paul Novus BAE
+ * Authenticate user-name and password input for user sign in.
+ * @author James Paul.
  */
-
 public class SignInAuthenticator {
 
 	private boolean loginStatus;
 
-	/**Constructor
-	 * @param usernameInput - User name
-	 * @param passwordInput -User password
-	 * @param mainApp Main - application
+	/**
+	 * Constructor.
+	 * @param usernameInput	- User user-name input.
+	 * @param passwordInput - User password input.
+	 * @param mainApp Main 	- Main application.
 	 */
 	public SignInAuthenticator(final String usernameInput, final String passwordInput, final MainApp mainApp){
 		setLoginStatus(compareDetails(usernameInput, passwordInput, mainApp));
@@ -26,7 +26,7 @@ public class SignInAuthenticator {
 		final UserDAOImpl ud = new UserDAOImpl();
 		final User u = ud.getUser(usernameInput);
 
-		if (u != null&&usernameInput.equals(u.getName())){
+		if (u != null && usernameInput.equals(u.getName())){
 			isCorrect = passwordInput.equals(u.getPassword());
 			mainApp.setUser(u);
 		}
@@ -34,14 +34,14 @@ public class SignInAuthenticator {
 	}
 
 	/**
-	 * @return login status
+	 * @return login status.
 	 */
 	public boolean isLoginStatus() {
 		return this.loginStatus;
 	}
 
 	/**
-	 * @param loginStatus
+	 * @param loginStatus - Set login status.
 	 */
 	public void setLoginStatus(final boolean loginStatus) {
 		this.loginStatus = loginStatus;

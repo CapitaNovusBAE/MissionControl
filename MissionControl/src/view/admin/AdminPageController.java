@@ -1,4 +1,5 @@
 package view.admin;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+/**
+ * Adim Page FXML Controller.
+ * @author James Paul.
+ */
 public class AdminPageController {
 
 	UserDAOImpl ud = new UserDAOImpl();
@@ -49,9 +55,11 @@ public class AdminPageController {
 	@FXML
 	private ComboBox<String> showPermissions;
 	@FXML
-	private Button deleteUserBtn;
-	@FXML
 	private Text editUserAlert;
+	@FXML
+	private Button updateUserBtn;
+	@FXML
+	private CheckBox activeBox;
 
 	private final ObservableList<String> permissionLevels = FXCollections.observableArrayList("LOW", "MEDIUM", "HIGH");
 
@@ -68,6 +76,7 @@ public class AdminPageController {
 
 		this.missingFields.setText("");
 
+		// SEARCH FOR EMPTY FIELDS
 		if(this.addUserUsername.getText().trim().isEmpty()){
 			blankFields = true;
 			missingElements.add("Username");
@@ -129,7 +138,7 @@ public class AdminPageController {
 			}
 		}
 
-		//**********
+		// ADD USER IF ALL IS WELL.
 		if (addUser){
 			final User user = new User(username, password, lvl, true);
 			this.ud.addUser(user);
@@ -142,58 +151,83 @@ public class AdminPageController {
 		}
 	}
 
-	private boolean search = false;
+	//***********************************************************************
 
-	// LOCK INPUT ON RIGHT HAND SIDE UNTIL SEARCH TAKES PLACE!!!!!
+	User u;
+
 	@FXML
 	private void searchUsers(){
-		final User u = this.ud.getUser(this.searchUsernames.getText());
+		u = this.ud.getUser(this.searchUsernames.getText());
 
 		if (u==null){
-			//ALERT USER ABOUT "NO USER FOUND". <<<<<<<<<<<<<-------------------
 			this.editUserAlert.setText("User not found.");
 			return;
 		}
 
-		this.showUsername.setEditable(true);
-		this.showPassword.setEditable(true);
-		this.showPermissions.setEditable(true);
-
 		this.showUsername.setText(u.getName());
 		this.showPassword.setText(u.getPassword());
 		this.showPermissions.setValue(u.getPermissionLevel().toString());
+		this.activeBox.setSelected(u.isActive());
 
 		this.editUserAlert.setText("User found.");
 
-		this.search = true;
+		searchUsernames.setText("");;
 	}
 
 	@FXML
-	private void removeUser(){
+	private void updateUserDB(){
 
-		if(!this.search){
-			this.editUserAlert.setText("Search for user to remove.");
-			return;
+		if(updateUserBtn.getText().equals("Edit")){
+			//MAKE USER FIELDS EDITABLE
+			this.showUsername.setEditable(true);
+			this.showPassword.setEditable(true);
+			this.showPermissions.setEditable(true);
+			this.activeBox.setDisable(false);
+			this.showPermissions.setItems(this.permissionLevels);
+			//CHANGE TEXT ON BUTTON
+			updateUserBtn.setText("Update");
+		}else{
+
+			this.editUserAlert.setText("User Updated.");
+
+			u.setName(showUsername.getText());
+			u.setPassword(showPassword.getText());
+			//u.setpLevel(PermissionLevels.valueOf(showPermissions.toString())); <-broken
+			u.setActive(activeBox.isSelected());
+
+			ud.updateUser(u);
+
+			//MAKE USER FIELDS NOT EDITABLE
+			this.showUsername.setEditable(false);
+			this.showPassword.setEditable(false);
+			this.showPermissions.setEditable(false);
+			this.activeBox.setDisable(true);
+			// EMPTY USER FIELDS
+			this.showUsername.setText("");
+			this.showPassword.setText("");
+			this.showPermissions.setItems(null);
+			this.activeBox.setSelected(false);
+			//CHANGE TEXT ON BUTTON
+			updateUserBtn.setText("Edit");
 		}
-
-		this.ud.deleteUser(this.showUsername.getText());
-
-		this.showUsername.setText("");
-		this.showPassword.setText("");
-		this.showPermissions.setValue("");
-
-		this.editUserAlert.setText("User Removed.");
 	}
 
+	/**
+	 * Set items within combo boxes.
+	 * Disable input in edit user section on initialise.
+	 */
 	public void initialize(){
 		this.permissionBox.setItems(this.permissionLevels);
-		this.showPermissions.setItems(this.permissionLevels);
-
 		this.showUsername.setEditable(false);
 		this.showPassword.setEditable(false);
 		this.showPermissions.setEditable(false);
+		this.activeBox.setDisable(true);
+		updateUserBtn.setText("Edit");
 	}
 
+	/**
+	 * @param mainApp - link to MainApp.
+	 */
 	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
