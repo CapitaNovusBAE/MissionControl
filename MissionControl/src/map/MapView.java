@@ -24,7 +24,7 @@ import gov.nasa.worldwind.util.BasicDragger;
  */
 public class MapView  {
 
-	static RenderableLayer layer;
+	private RenderableLayer layer;
 	private List<Position> mousePositionOnMap;
 	private Position pickedPosition;
 	private WorldWindowGLJPanel worldWindPanel;
@@ -33,8 +33,11 @@ public class MapView  {
 	 */
 	public static boolean selected = false;
 
+	private Object lock = new Object();
 
-
+public Object getLock(){
+	return this.lock;
+}
 	/**
 	 * Constructor
 	 */
@@ -46,7 +49,8 @@ public class MapView  {
 	 * @return all postions on the map
 	 */
 	public List<Position> getPositions(){
-		return this.mousePositionOnMap;
+				return this.mousePositionOnMap;
+
 	}
 	/**
 	 * @return JPanel with {@link WorldWindowGLJPanel}
@@ -61,18 +65,16 @@ public class MapView  {
 		this.worldWindPanel.setModel(new BasicModel());
 		// adding for dragging
 		this.worldWindPanel.getInputHandler().addSelectListener(new BasicDragger(this.worldWindPanel));
-
-		// List to hold positions and use them later for creating picture
-		this.mousePositionOnMap = new LinkedList<>();
 		// for now layer shared with others so screen has only one layer on top
 		// Create one set of layers.
 
 		layer = new RenderableLayer();
-		layer.setPickEnabled(true);
+		this.worldWindPanel.getModel().getLayers().add(layer);
 		// adding mouse listener to window
 		// create an instance of the dragger and give it a WWJ instance to use
 
 		this.worldWindPanel.getInputHandler().addMouseListener(getMouseListener());// ends mouse Listener
+
 		return this.worldWindPanel;
 
 
@@ -91,12 +93,14 @@ public class MapView  {
 
 				// Making sure that not adding null positions and the same
 				// position again
-				if (mouseCurrentPosition != null && !MapView.this.mousePositionOnMap.contains(mouseCurrentPosition)&& pE.getButton() == MouseEvent.BUTTON1) {
+				if (mouseCurrentPosition != null && !(MapView.this.mousePositionOnMap.contains(mouseCurrentPosition))&& pE.getButton() == MouseEvent.BUTTON1) {
 					// after null check to make sure coordinates are not null
 					// avoiding null point exceptions
+					synchronized (lock) {
+						// creating list of position from map
+						mousePositionOnMap.add(mouseCurrentPosition);
+					}
 
-					// creating list of position from map
-					MapView.this.mousePositionOnMap.add(mouseCurrentPosition);
 
 					// adding select listener to window
 					MapView.this.worldWindPanel.getInputHandler().addSelectListener(new SelectListener() {
@@ -161,7 +165,8 @@ public class MapView  {
 
 					System.out.println("Current Pos= " + mouseCurrentPosition);
 					updateView();
-					MapView.this.worldWindPanel.getModel().getLayers().add(layer);
+
+					//MapView.this.worldWindPanel.getModel().getLayers().add(layer);
 
 				} // ends if loop if position is not null
 
@@ -187,10 +192,11 @@ public class MapView  {
 	}
 
 	private void drawMarkers() {
-
+		System.out.println(mousePositionOnMap.size());
 		for (final Position pos : this.mousePositionOnMap) {
 			final PointPlacemark pointPlacemarkOnMapList = new PointPlacemark(pos);
 			layer.addRenderable(pointPlacemarkOnMapList);
+
 
 		}
 	}
@@ -201,6 +207,9 @@ public class MapView  {
 	public void updateView(){
 		drawMarkers();
 		drawPolyLines();
+		if(!this.worldWindPanel.getModel().getLayers().contains(layer)){
+			this.worldWindPanel.getModel().getLayers().add(layer);
+		}
 	}
 
 	private List<Position> removeFromListAfterAction(final List<Position> list, final Position pick, final Position end) {

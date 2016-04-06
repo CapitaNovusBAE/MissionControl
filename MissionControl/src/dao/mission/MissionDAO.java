@@ -100,6 +100,7 @@ public class MissionDAO extends AbstractDAO {
 	 * @return Mission by id
 	 */
 	public Mission get(final int id) {
+		System.out.println("Get misison: = " + id);
 		PreparedStatement prs = null;
 		final Connection conn = getConnection();
 		ResultSet rs =null;
@@ -107,8 +108,11 @@ public class MissionDAO extends AbstractDAO {
 
 			final String query = "SELECT * FROM " + TABLE + " WHERE " + ID + " = " + id;
 			prs = conn.prepareStatement(query);
+			System.out.println(query);
 			rs = prs.executeQuery();
+	
 			while (rs.next()) {
+				
 				return new Mission(rs.getInt(ID), rs.getString(USERNAME),rs.getString(TITLE),
 						jsonToPosition(rs.getString(POSITIONS)),stringToCommentList(rs.getString(COMMENTS)),rs.getDate(DEPARTURE),rs.getDate(ARRIVAL));
 			}
@@ -116,7 +120,7 @@ public class MissionDAO extends AbstractDAO {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeQuietly(conn);
+			closeQuietly(conn); 
 			closeQuietly(prs);
 			closeQuietly(rs);
 		}
@@ -191,10 +195,10 @@ public class MissionDAO extends AbstractDAO {
 	 * Convert Json string from db to position list
 	 */
 	private List<Position> jsonToPosition(final String positionJson) {
-
+		System.out.println(positionJson);
 		final List<Position> positionList = new ArrayList<Position>();
 		try {
-			final JSONArray arr = new JSONArray(positionJson);
+			final JSONArray arr = new JSONArray("[{\"latitude\":\"11.11\",\"longitude\":\"22.22\",\"elevation\":\"33.33\"},{\"latitude\":\"112.112\",\"longitude\":\"222.222\",\"elevation\":\"332.332\"},{\"latitude\":\"113.113\",\"longitude\":\"223.223\",\"elevation\":\"333.333\"}]");
 
 			for (int i = 0; i < arr.length(); i++) {
 				double latitude = 0;
