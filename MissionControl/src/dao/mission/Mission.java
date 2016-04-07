@@ -14,7 +14,7 @@ import gov.nasa.worldwind.geom.Position;
 public class Mission {
 
 	private int missionID;
-	private final String missionTitle;
+	private String missionTitle;
 	private final List<Position> postionList;
 	private final List<String> comments;
 	private String userName;
@@ -65,6 +65,12 @@ public class Mission {
 		return this.missionTitle;
 	}
 
+	/**
+	 * @param title - mission title
+	 */
+	public void setTittle(final String title) {
+		this.missionTitle = title;
+	}
 	/**
 	 * @return all positions for to the mission
 	 */
@@ -149,6 +155,7 @@ public class Mission {
 	public void setUsername(final String userName){
 		this.userName = userName;
 	}
+
 	@Override
 	public String toString() {
 		return "Mission [missionID=" + this.missionID + ", missionTitle=" + this.missionTitle + ", postions="

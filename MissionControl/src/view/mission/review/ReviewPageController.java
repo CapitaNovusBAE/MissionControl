@@ -67,7 +67,12 @@ public class ReviewPageController implements Initializable {
 	 */
 	public void findMission(){
 		this.mission = this.mdao.get(Integer.parseInt(this.txtMissionID.getText()));
-		addWaypoints();
+		if(this.mission!=null){
+			addWaypoints();
+			this.btnAddComment.setDisable(false);
+			this.btnDeleteMission.setDisable(false);
+			this.btnUpdateMission.setDisable(false);
+		}
 	}
 
 
@@ -93,6 +98,9 @@ public class ReviewPageController implements Initializable {
 		this.mdao= new MissionDAO();
 		this.mapView = new MapView();
 		this.mapNode.setContent(this.mapView.getMap());
+		this.btnAddComment.setDisable(true);
+		this.btnDeleteMission.setDisable(true);
+		this.btnUpdateMission.setDisable(true);
 	}
 
 	/**

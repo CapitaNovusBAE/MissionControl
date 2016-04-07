@@ -27,6 +27,7 @@ public class MainApp extends Application {
 	private BorderPane mainLayout;
 	private User user;
 
+	@Override
 	public void start(final Stage primaryStage) {
 
 		this.primaryStage = primaryStage;

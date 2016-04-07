@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dao.mission.Mission;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import javafx.application.Platform;
@@ -21,7 +22,7 @@ import map.MapView;
  * @author Controller for
  *
  */
-public class FlightPathController extends AssignPageController implements Initializable {
+public class FlightPathController implements Initializable {
 
 	private static final long DELAY = 100;
 
@@ -41,15 +42,24 @@ public class FlightPathController extends AssignPageController implements Initia
 	private TextField elevation;
 
 	@FXML
-	private Button addWaypointButton;;
+	private Button addWaypointButton;
+
+	@FXML
+	private Button locationSearchBtn;
+
+	@FXML
+	private TextField locatiomTxtField;
 
 	private MapView mapView;
+
+	private Mission mission;
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
 		this.mapView = new MapView();
 		this.mapNode.setContent(this.mapView.getMap());
 	}
+
 
 	/**
 	 * Action on add waypoint button click
@@ -64,6 +74,15 @@ public class FlightPathController extends AssignPageController implements Initia
 		this.elevation.clear();
 
 		updateView();
+	}
+
+	/**
+	 * Action on search button click
+	 */
+	public void searchLocation(){
+		final String location = this.locatiomTxtField.getText();
+		//TODO lookup in map
+
 	}
 	/**
 	 * Update ListView on map click
@@ -82,5 +101,11 @@ public class FlightPathController extends AssignPageController implements Initia
 				});
 			}
 		}, DELAY);
+	}
+
+
+	public void setMission(final Mission mission) {
+		this.mission =mission;
+
 	}
 }

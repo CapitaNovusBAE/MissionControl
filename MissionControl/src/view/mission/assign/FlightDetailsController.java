@@ -1,13 +1,10 @@
 package view.mission.assign;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import controller.SignInAuthenticator;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
-import javafx.event.ActionEvent;
+import dao.mission.Mission;
+import dao.mission.MissionDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,6 +19,8 @@ public class FlightDetailsController implements Initializable{
 	@FXML
 	private TextField missionNum ;
 	@FXML
+	private TextField missionTitle ;
+	@FXML
 	private TextField distance;
 	@FXML
 	private TextField runtime;
@@ -32,23 +31,38 @@ public class FlightDetailsController implements Initializable{
 	@FXML
 	private Button changeDataBtn;
 
+	private Mission mission;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		/*this.missionNum = new TextField();
-		this.missionNum.setEditable(false);
-		this.missionNum.setText("ondfv");*/
-	}
-	
 	/**
 	 * Action on ChangeData button click
 	 */
-	@FXML 
-	public void changeData(final ActionEvent event){
-		
-		this.missionNum.setEditable(false);
-		this.missionNum.setText("ondfv");
-		
+	public void changeData(){
+		this.mission.setTittle(this.missionTitle.getText());
+		final MissionDAO mdao = new MissionDAO();
+		mdao.update(this.mission);
+	}
+
+	/**
+	 * @param mission assigned {@link Mission}
+	 */
+	public void init(final Mission mission) {
+		this.mission = mission;
+		//		this.missionTitle.setText(this.mission.getTittle());
+		this.missionTitle.setText("Mission 1");
+		//		this.missionNum.setText(String.valueOf(this.mission.getID()));
+		this.missionNum.setText(String.valueOf(12));
+		this.distance.setText("Not implemented yet");
+		this.runtime.setText("Not implemented yet");
+
+	}
+
+	@Override
+	public void initialize(final URL location, final ResourceBundle resources) {
+		this.missionTitle.setText("Mission 1");
+		//		this.missionNum.setText(String.valueOf(this.mission.getID()));
+		this.missionNum.setText(String.valueOf(12));
+		this.distance.setText("Not implemented yet");
+		this.runtime.setText("Not implemented yet");
+
 	}
 }

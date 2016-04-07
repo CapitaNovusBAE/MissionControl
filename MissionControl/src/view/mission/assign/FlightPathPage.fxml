@@ -35,27 +35,26 @@
                                 <items>
                                   <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <GridPane layoutX="76.0" layoutY="14.0" prefHeight="87.0" prefWidth="305.0">
+                                          <GridPane layoutX="75.0" layoutY="14.0" prefHeight="97.0" prefWidth="321.0">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.66665649414062" minWidth="10.0" prefWidth="124.33332824707031" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6666717529297" minWidth="10.0" prefWidth="176.6666717529297" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.66665649414062" minWidth="10.0" prefWidth="76.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="247.0" minWidth="10.0" prefWidth="243.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Location" />
-                                                <TextField prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" />
-                                                <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" text="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                                                <Label prefHeight="28.0" prefWidth="95.0" text="Location" />
+                                                <TextField fx:id="locationTxtField" onAction="#searchLocation" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" />
+                                                <Button fx:id="locationSearchBtn" mnemonicParsing="false" onAction="#searchLocation" prefHeight="33.0" prefWidth="63.0" text="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                                              </children>
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <GridPane layoutX="84.0" layoutY="14.0" prefHeight="118.0" prefWidth="297.0">
+                                          <GridPane layoutX="84.0" layoutY="14.0" prefHeight="158.0" prefWidth="313.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.66665649414062" minWidth="10.0" prefWidth="124.33332824707031" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.6666717529297" minWidth="10.0" prefWidth="176.6666717529297" />
@@ -67,12 +66,12 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <Label text="elevation (rad)" GridPane.rowIndex="2" />
+                                                <Label text="Elevation (rad)" GridPane.rowIndex="2" />
                                                 <TextField fx:id="latitude" onAction="#addWaypoint" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" />
                                                 <Button fx:id="addWaypointButton" mnemonicParsing="false" onAction="#addWaypoint" prefHeight="31.0" prefWidth="112.0" text="Add waypoint" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-                                                <Label text="longtitude (grad)" GridPane.rowIndex="1" />
+                                                <Label text="Longtitude (grad)" GridPane.rowIndex="1" />
                                                 <TextField fx:id="longtitude" onAction="#addWaypoint" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="latitude (grad)" />
+                                                <Label text="Latitude (grad)" />
                                                 <TextField fx:id="elevation" onAction="#addWaypoint" prefHeight="38.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>
                                           </GridPane>

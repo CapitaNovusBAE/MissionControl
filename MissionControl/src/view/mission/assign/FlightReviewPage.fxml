@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.SwingNode?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mission.assign.FlightReviewPageController">
+   <children>
+      <SplitPane dividerPositions="0.6" layoutY="30.0">
+        <items>
+            <AnchorPane>
+               <children>
+                  <TitledPane animated="false" onMouseClicked="#updateView" prefHeight="707.0" prefWidth="714.0" text="Map" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <SwingNode fx:id="mapNode" onMouseReleased="#updateView" />
+                     </content>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+              <items>
+                <AnchorPane>
+                     <children>
+                        <TitledPane animated="false" layoutX="72.0" layoutY="48.0" prefHeight="350.0" prefWidth="953.0" text="Mission Details" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="325.0" prefWidth="708.0" />
+                          </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane>
+                     <children>
+                        <TitledPane animated="false" layoutX="104.0" layoutY="59.0" prefHeight="349.0" prefWidth="953.0" text="Waypoints" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="lstPositions" prefHeight="240.0" prefWidth="323.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

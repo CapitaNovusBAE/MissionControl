@@ -100,7 +100,7 @@ public class MissionDAO extends AbstractDAO {
 	 * @return Mission by id
 	 */
 	public Mission get(final int id) {
-		System.out.println("Get misison: = " + id);
+		System.out.println("Get mission with id: = " + id);
 		PreparedStatement prs = null;
 		final Connection conn = getConnection();
 		ResultSet rs =null;
@@ -108,11 +108,10 @@ public class MissionDAO extends AbstractDAO {
 
 			final String query = "SELECT * FROM " + TABLE + " WHERE " + ID + " = " + id;
 			prs = conn.prepareStatement(query);
-			System.out.println(query);
 			rs = prs.executeQuery();
-	
+
 			while (rs.next()) {
-				
+
 				return new Mission(rs.getInt(ID), rs.getString(USERNAME),rs.getString(TITLE),
 						jsonToPosition(rs.getString(POSITIONS)),stringToCommentList(rs.getString(COMMENTS)),rs.getDate(DEPARTURE),rs.getDate(ARRIVAL));
 			}
@@ -120,7 +119,7 @@ public class MissionDAO extends AbstractDAO {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeQuietly(conn); 
+			closeQuietly(conn);
 			closeQuietly(prs);
 			closeQuietly(rs);
 		}
