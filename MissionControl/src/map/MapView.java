@@ -26,6 +26,7 @@ public class MapView  {
 
 	private RenderableLayer layer;
 	private final List<Position> mousePositionOnMap = new LinkedList<>();
+	Position pickedPosition;
 	private WorldWindowGLJPanel worldWindPanel;
 
 	/**
@@ -95,7 +96,7 @@ public class MapView  {
 						// running method if for selection
 						@Override
 						public void selected(final SelectEvent event) {
-							Position pickedPosition = null;
+							
 							// checking what is selected
 							if (event.getEventAction().equals(SelectEvent.HOVER) && event.hasObjects()
 									&& event.getTopObject() instanceof PointPlacemark) {

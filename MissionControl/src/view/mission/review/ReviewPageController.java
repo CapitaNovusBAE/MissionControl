@@ -113,6 +113,7 @@ public class ReviewPageController implements Initializable {
 	}
 	/**
 	 * Update ListView on map click
+	 * Vadim
 	 */
 	public void updateView(){
 		new Timer().schedule(new TimerTask() {
