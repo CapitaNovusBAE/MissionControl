@@ -88,19 +88,19 @@ public class FlightPathController implements Initializable {
 	 * Update ListView on map click
 	 */
 	public void updateView(){
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
+//		new Timer().schedule(new TimerTask() {
+//			@Override
+//			public void run() {
+//				Platform.runLater(new Runnable() {
+//					@Override
+//					public void run() {
 						final ObservableList<Position> positions = FlightPathController.this.positionsView.getItems();
 						positions.clear();
 						positions.addAll(FlightPathController.this.mapView.getPositions());
-					}
-				});
-			}
-		}, DELAY);
+//					}
+//				});
+//			}
+//		}, DELAY);
 	}
 
 

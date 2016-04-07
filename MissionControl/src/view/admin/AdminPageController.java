@@ -43,23 +43,23 @@ public class AdminPageController {
 	private Button addUserBtn;
 	@FXML
 	private Text missingFields;
-
-	@FXML
-	private Button searchUsersBtn;
+	//*****************
 	@FXML
 	private TextField searchUsernames;
 	@FXML
-	private TextField showUsername;
+	private Button searchUsersBtn;
 	@FXML
 	private PasswordField showPassword;
+	@FXML
+	private PasswordField showConfirmPassword;
 	@FXML
 	private ComboBox<String> showPermissions;
 	@FXML
 	private Text editUserAlert;
 	@FXML
-	private Button updateUserBtn;
-	@FXML
 	private CheckBox activeBox;
+	@FXML
+	private Button updateUserBtn;
 
 	private final ObservableList<String> permissionLevels = FXCollections.observableArrayList("LOW", "MEDIUM", "HIGH");
 
@@ -160,54 +160,72 @@ public class AdminPageController {
 		u = this.ud.getUser(this.searchUsernames.getText());
 
 		if (u==null){
+			this.showPassword.setText("");
+			this.showConfirmPassword.setText("");
+			this.showPermissions.setItems(null);
+			this.activeBox.setSelected(false);
+
+			this.searchUsernames.setText("");
 			this.editUserAlert.setText("User not found.");
+		} else{
+			this.showPassword.setText(u.getPassword());
+			this.showConfirmPassword.setText(u.getPassword());
+
+			this.showPermissions.setValue(u.getPermissionLevel().toString());
+			this.activeBox.setSelected(u.isActive());
+
+			this.editUserAlert.setText("User found.");
 			return;
 		}
-
-		this.showUsername.setText(u.getName());
-		this.showPassword.setText(u.getPassword());
-		this.showPermissions.setValue(u.getPermissionLevel().toString());
-		this.activeBox.setSelected(u.isActive());
-
-		this.editUserAlert.setText("User found.");
-
-		searchUsernames.setText("");;
 	}
 
 	@FXML
 	private void updateUserDB(){
 
 		if(updateUserBtn.getText().equals("Edit")){
-			//MAKE USER FIELDS EDITABLE
-			this.showUsername.setEditable(true);
 			this.showPassword.setEditable(true);
+			this.showConfirmPassword.setEditable(true);
 			this.showPermissions.setEditable(true);
 			this.activeBox.setDisable(false);
+
+			this.searchUsernames.setEditable(false);
+			this.searchUsersBtn.setDisable(true);
+
 			this.showPermissions.setItems(this.permissionLevels);
-			//CHANGE TEXT ON BUTTON
 			updateUserBtn.setText("Update");
 		}else{
 
-			this.editUserAlert.setText("User Updated.");
+			if(showPassword.getText().length() < 8){
+				this.editUserAlert.setText("Password's must be at least 8 characters long.");
+				return;
+			} else if (!this.showPassword.getText().equals(this.showConfirmPassword.getText())){
+				this.editUserAlert.setText("Password's do not match.");
+				return;
+			} else {
+				u.setPassword(showPassword.getText());
+				u.setpLevel(PermissionLevels.valueOf(this.showPermissions.getValue()));
+				u.setActive(activeBox.isSelected());
 
-			u.setName(showUsername.getText());
-			u.setPassword(showPassword.getText());
-			//u.setpLevel(PermissionLevels.valueOf(showPermissions.toString())); <-broken
-			u.setActive(activeBox.isSelected());
+				// UPDATE UserDAOImpl updateUser to update active value.
+				ud.updateUser(u);
 
-			ud.updateUser(u);
+				this.editUserAlert.setText("User Updated.");
+			}
 
-			//MAKE USER FIELDS NOT EDITABLE
-			this.showUsername.setEditable(false);
+			this.searchUsernames.setEditable(true);
+			this.searchUsersBtn.setDisable(false);
+
 			this.showPassword.setEditable(false);
+			this.showConfirmPassword.setEditable(false);
 			this.showPermissions.setEditable(false);
 			this.activeBox.setDisable(true);
-			// EMPTY USER FIELDS
-			this.showUsername.setText("");
+
+			this.searchUsernames.setText("");
 			this.showPassword.setText("");
+			this.showConfirmPassword.setText("");
 			this.showPermissions.setItems(null);
 			this.activeBox.setSelected(false);
-			//CHANGE TEXT ON BUTTON
+
 			updateUserBtn.setText("Edit");
 		}
 	}
@@ -217,11 +235,12 @@ public class AdminPageController {
 	 * Disable input in edit user section on initialise.
 	 */
 	public void initialize(){
-		this.permissionBox.setItems(this.permissionLevels);
-		this.showUsername.setEditable(false);
 		this.showPassword.setEditable(false);
+		this.showConfirmPassword.setEditable(false);
 		this.showPermissions.setEditable(false);
 		this.activeBox.setDisable(true);
+
+		this.permissionBox.setItems(this.permissionLevels);
 		updateUserBtn.setText("Edit");
 	}
 

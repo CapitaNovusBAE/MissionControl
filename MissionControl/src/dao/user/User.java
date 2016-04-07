@@ -56,7 +56,7 @@ public class User {
 		return this.active;
 	}
 
-	public void setActive(final boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 
