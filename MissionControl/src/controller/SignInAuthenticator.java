@@ -29,7 +29,11 @@ public class SignInAuthenticator {
 		if (u != null && usernameInput.equals(u.getName())){
 			isCorrect = passwordInput.equals(u.getPassword());
 			mainApp.setUser(u);
+		
 		}
+		
+		
+
 		return isCorrect;
 	}
 

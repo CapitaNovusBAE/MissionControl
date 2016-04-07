@@ -1,12 +1,14 @@
 package view.navigation;
 
 import controller.MainApp;
+import dao.user.User.PermissionLevels;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 /**
  * Navigation Menu FXML Controller
+ * 
  * @author James Paul
  */
 public class NavigationMenuController {
@@ -23,23 +25,33 @@ public class NavigationMenuController {
 	private MainApp mainApp;
 
 	@FXML
-	private void buttonPress(final ActionEvent event){
-		if(event.getSource().equals(this.homeBtn)) {
+	private void buttonPress(final ActionEvent event) {
+		if (event.getSource().equals(this.homeBtn)) {
 			this.mainApp.loadHomePage();
-		} else if (event.getSource().equals(this.assignBtn)){
+		} else if (event.getSource().equals(this.assignBtn)) {
 			this.mainApp.loadAssignPage();
-		} else if (event.getSource().equals(this.reviewBtn)){
+		} else if (event.getSource().equals(this.reviewBtn)) {
 			this.mainApp.loadReviewPage();
-		} else if (event.getSource().equals(this.adminBtn)){
+		} else if (event.getSource().equals(this.adminBtn)) {
 			this.mainApp.loadAdminPage();
 		}
 	}
 
 	/**
-	 * @param mainApp - link to MainApp.
+	 * @param mainApp
+	 *            - link to MainApp.
 	 */
 	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
+		if (!mainApp.getUser().getPermissionLevel().equals(PermissionLevels.HIGH)) {
+			adminBtn.setDisable(true);
+		}
+		
+		if (mainApp.getUser().getPermissionLevel().equals(PermissionLevels.LOW)) {
+			assignBtn.setDisable(true);
+		}
+
 	}
+
 }
