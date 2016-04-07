@@ -140,6 +140,11 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
                                  <children>
+                                    <Button fx:id="updateCancelBtn" mnemonicParsing="false" onAction="#updateCancel" prefWidth="120.0" text="Cancel">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
                                     <Button fx:id="updateUserBtn" mnemonicParsing="false" onAction="#updateUserDB" prefWidth="120.0" text="Update" />
                                  </children>
                               </HBox>

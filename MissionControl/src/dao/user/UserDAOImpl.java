@@ -151,4 +151,21 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 		return result && closeQuietly(conn) && closeQuietly(prs);
 	}
 
+	@Override
+	public boolean enableUser(final String userName) {
+		final Connection conn = getConnection();
+		PreparedStatement prs = null;
+		boolean result = false;
+		try {
+			final String query = "UPDATE users SET " + ACTIVE + "=" + true + " WHERE " + USERNAME + " = '" + userName + "'";
+			prs= conn.prepareStatement(query);
+			result = prs.execute();
+
+		} catch (final Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result && closeQuietly(conn) && closeQuietly(prs);
+	}
+
 }
