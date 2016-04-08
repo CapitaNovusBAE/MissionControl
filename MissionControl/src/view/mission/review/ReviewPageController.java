@@ -15,6 +15,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import map.MapView;
@@ -35,11 +36,23 @@ public class ReviewPageController implements Initializable {
 	@FXML
 	private TextField txtMissionID;
 	@FXML
+	private TextField txtUserName;
+	@FXML
+	private TextField txtDetailsMissionID;
+	@FXML
+	private TextField txtMissionTitle;
+	@FXML
+	private DatePicker dateDeptDate;
+	@FXML
+	private DatePicker dateArrDate;
+	@FXML
 	private ListView<String> lstMissionComments;
 	@FXML
 	private ListView<Position> lstPositions;
 	@FXML
 	private SwingNode mapNode;
+	
+	
 
 	private Mission mission;
 
@@ -66,9 +79,19 @@ public class ReviewPageController implements Initializable {
 	 * Action on find mission button click
 	 */
 	public void findMission(){
+		
+		
 		this.mission = this.mdao.get(Integer.parseInt(this.txtMissionID.getText()));
+	
 		if(this.mission!=null){
+			
 			addWaypoints();
+			txtDetailsMissionID.setText(String.valueOf(mission.getID()));
+			txtMissionTitle.setText(mission.getTittle());
+			txtUserName.setText(mission.getUsername());
+			dateDeptDate.setValue(mission.getDepartureDate().toLocalDate());
+			dateArrDate.setValue(mission.getArrivalDate().toLocalDate());
+			
 			this.btnAddComment.setDisable(false);
 			this.btnDeleteMission.setDisable(false);
 			this.btnUpdateMission.setDisable(false);

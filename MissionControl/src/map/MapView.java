@@ -36,7 +36,7 @@ public class MapView  {
 	}
 
 	/**
-	 * @return all postions on the map
+	 * @return all positions on the map
 	 */
 	public List<Position> getPositions(){
 		return this.mousePositionOnMap;
