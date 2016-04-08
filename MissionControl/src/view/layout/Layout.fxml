@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane id="layout" maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../../bin/view/GlobalStyleSheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.layout.LayoutController">
+<BorderPane id="layout" maxHeight="768.0" maxWidth="1366.0" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../GlobalStyleSheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.layout.LayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>

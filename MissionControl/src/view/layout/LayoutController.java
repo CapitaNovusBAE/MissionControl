@@ -1,21 +1,11 @@
 package view.layout;
 
-import controller.MainApp;
+import view.FXMLControllerAbstract;
 
 /**
  * Layout FXML Controller
  * @author James Paul
  */
-public class LayoutController {
+public class LayoutController extends FXMLControllerAbstract{
 
-	@SuppressWarnings("unused")
-	private MainApp mainApp;
-
-	/**
-	 * @param mainApp - link to MainApp.
-	 */
-	public void setMainApp(MainApp mainApp) {
-		// TODO Auto-generated method stub
-		this.mainApp = mainApp;
-	}
 }

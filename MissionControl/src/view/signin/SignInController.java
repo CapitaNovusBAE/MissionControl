@@ -2,7 +2,6 @@ package view.signin;
 
 import java.sql.SQLException;
 
-import controller.MainApp;
 import controller.SignInAuthenticator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import view.FXMLControllerAbstract;
 
 /**
  * Sign In FXML Controller
  * @author James Paul
  */
-public class SignInController{
+public class SignInController extends FXMLControllerAbstract{
 
 	@FXML
 	private PasswordField pwInput;
@@ -25,8 +25,6 @@ public class SignInController{
 	private Button signInBtn;
 	@FXML
 	private Text signInFailText;
-
-	private MainApp mainApp;
 
 	int signInAttempts = 0;
 
@@ -66,16 +64,5 @@ public class SignInController{
 		}
 
 		this.pwInput.setText("");
-	}
-
-	/**
-	 * @param mainApp - link to MainApp.
-	 */
-	public void setMainApp(final MainApp mainApp) {
-		// TODO Auto-generated method stub
-		this.mainApp = mainApp;
-
-		this.unInput.setText("Admin");
-		this.pwInput.setText("admin123");
 	}
 }

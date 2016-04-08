@@ -3,26 +3,27 @@ package view.admin;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.MainApp;
 import dao.user.User;
 import dao.user.User.PermissionLevels;
 import dao.user.UserDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import view.FXMLControllerAbstract;
 
 /**
  * Adim Page FXML Controller.
  * @author James Paul.
  */
-public class AdminPageController {
+public class AdminPageController extends FXMLControllerAbstract{
 
 	@FXML
 	private TextField addUserUsername;
@@ -60,11 +61,11 @@ public class AdminPageController {
 
 	private final ObservableList<String> permissionLevels = FXCollections.observableArrayList("LOW", "MEDIUM", "HIGH");
 
-	@SuppressWarnings("unused")
-	private MainApp mainApp;
-
+	//***********************************************************************
+	//ADD USER
+	//***********************************************************************
 	@FXML
-	private void addUser(final ActionEvent event){
+	private void addUser(){
 
 		final List<String> missingElements = new ArrayList<String>();
 		this.missingFields.setText("");
@@ -126,6 +127,26 @@ public class AdminPageController {
 		}
 	}
 
+
+	@FXML
+	private void enterKey(final KeyEvent event){
+
+		if(event.getCode() == KeyCode.ENTER){
+			if(event.getSource().equals(this.addUserUsername)) {
+				this.addUserPassword.requestFocus();
+			} else if(event.getSource().equals(this.addUserPassword)) {
+				this.addUserConfirmPassword.requestFocus();
+			} else if(event.getSource().equals(this.addUserConfirmPassword)) {
+				this.permissionBox.requestFocus();
+			} else if(event.getSource().equals(this.permissionBox)) {
+				this.addUser();
+			}
+		}
+	}
+
+
+	//***********************************************************************
+	//EDIT USER
 	//***********************************************************************
 
 	@FXML
@@ -180,10 +201,31 @@ public class AdminPageController {
 		}
 	}
 
+	@FXML
+	private void editEnterKey(final KeyEvent event){
+
+		if(event.getCode() == KeyCode.ENTER){
+			if(event.getSource().equals(this.searchUsernames)) {
+				this.searchUsers();
+				this.showPassword.requestFocus();
+			} else if(event.getSource().equals(this.showPassword)) {
+				this.showConfirmPassword.requestFocus();
+			} else if(event.getSource().equals(this.showConfirmPassword)) {
+				this.showPermissions.requestFocus();
+			} else if(event.getSource().equals(this.showPermissions)) {
+				this.activeBox.requestFocus();
+			} else if(event.getSource().equals(this.activeBox)) {
+				this.updateUserDB();
+			}
+		}
+	}
+
+	//***********************************************************************
+	//FUNCTIONALITY
 	//***********************************************************************
 
 	/**
-	 *
+	 *Reset fields
 	 */
 	public void resetFields(){
 		this.searchUsernames.setText("");
@@ -194,7 +236,7 @@ public class AdminPageController {
 	}
 
 	/**
-	 *
+	 *Toggle enabled
 	 */
 	public void toggleEnabled(){
 		this.searchUsernames.setEditable(!searchUsernames.isEditable());
@@ -225,13 +267,5 @@ public class AdminPageController {
 		this.updateUserBtn.setDisable(true);
 		this.updateCancelBtn.setDisable(true);
 		this.showPermissions.setDisable(true);
-	}
-
-	/**
-	 * @param mainApp - link to MainApp.
-	 */
-	public void setMainApp(final MainApp mainApp) {
-		// TODO Auto-generated method stub
-		this.mainApp = mainApp;
 	}
 }

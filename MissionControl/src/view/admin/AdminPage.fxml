@@ -43,7 +43,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <TextField fx:id="addUserUsername" prefWidth="200.0" promptText="Enter Username" />
+                                    <TextField fx:id="addUserUsername" onKeyPressed="#enterKey" prefWidth="200.0" promptText="Enter Username" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
@@ -53,7 +53,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <PasswordField fx:id="addUserPassword" prefWidth="200.0" promptText="Enter Password" />
+                                    <PasswordField fx:id="addUserPassword" onKeyPressed="#enterKey" prefWidth="200.0" promptText="Enter Password" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
@@ -63,7 +63,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <PasswordField fx:id="addUserConfirmPassword" prefWidth="200.0" promptText="Re-Enter Password" />
+                                    <PasswordField fx:id="addUserConfirmPassword" onKeyPressed="#enterKey" prefWidth="200.0" promptText="Re-Enter Password" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -73,7 +73,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <ComboBox fx:id="permissionBox" prefWidth="200.0" promptText="Please Select" visibleRowCount="3" />
+                                    <ComboBox fx:id="permissionBox" onKeyPressed="#enterKey" prefWidth="200.0" promptText="Please Select" visibleRowCount="3" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
@@ -115,7 +115,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <PasswordField fx:id="showPassword" promptText="Enter Password" />
+                                    <PasswordField fx:id="showPassword" onKeyPressed="#editEnterKey" promptText="Enter Password" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
@@ -125,7 +125,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <ComboBox fx:id="showPermissions" prefWidth="200.0" promptText="Please Select" visibleRowCount="3" />
+                                    <ComboBox fx:id="showPermissions" onKeyPressed="#editEnterKey" prefWidth="200.0" promptText="Please Select" visibleRowCount="3" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -135,7 +135,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <PasswordField fx:id="showConfirmPassword" prefWidth="200.0" promptText="Re-Enter Password" />
+                                    <PasswordField fx:id="showConfirmPassword" onKeyPressed="#editEnterKey" prefWidth="200.0" promptText="Re-Enter Password" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
@@ -159,7 +159,7 @@
                                     <Label text="Seach Users:" />
                                  </children>
                               </HBox>
-                              <TextField fx:id="searchUsernames" prefWidth="200.0" promptText="Enter Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="searchUsernames" onKeyPressed="#editEnterKey" prefWidth="200.0" promptText="Enter Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
                                  <children>
                                     <Text id="loginFailureText" fx:id="editUserAlert" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -172,7 +172,7 @@
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <children>
-                                    <CheckBox fx:id="activeBox" mnemonicParsing="false" />
+                                    <CheckBox fx:id="activeBox" mnemonicParsing="false" onKeyPressed="#editEnterKey" />
                                  </children>
                               </HBox>
                            </children>

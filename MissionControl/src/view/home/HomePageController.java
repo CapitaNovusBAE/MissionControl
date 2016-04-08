@@ -1,21 +1,12 @@
 package view.home;
 
-import controller.MainApp;
+import view.FXMLControllerAbstract;
 
 /**
  * Home Page FXML Controller
  * @author James Paul
  */
-public class HomePageController {
+public class HomePageController extends FXMLControllerAbstract{
 
-	@SuppressWarnings("unused")
-	private MainApp mainApp;
 
-	/**
-	 * @param mainApp - link to MainApp.
-	 */
-	public void setMainApp(MainApp mainApp) {
-		// TODO Auto-generated method stub
-		this.mainApp = mainApp;
-	}
 }

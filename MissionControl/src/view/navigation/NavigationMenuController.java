@@ -5,13 +5,13 @@ import dao.user.User.PermissionLevels;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import view.FXMLControllerAbstract;
 
 /**
  * Navigation Menu FXML Controller
- * 
  * @author James Paul
  */
-public class NavigationMenuController {
+public class NavigationMenuController extends FXMLControllerAbstract{
 
 	@FXML
 	Button homeBtn;
@@ -21,8 +21,6 @@ public class NavigationMenuController {
 	Button reviewBtn;
 	@FXML
 	Button adminBtn;
-
-	private MainApp mainApp;
 
 	@FXML
 	private void buttonPress(final ActionEvent event) {
@@ -37,21 +35,18 @@ public class NavigationMenuController {
 		}
 	}
 
-	/**
-	 * @param mainApp
-	 *            - link to MainApp.
-	 */
+	@Override
 	public void setMainApp(final MainApp mainApp) {
 		// TODO Auto-generated method stub
 		this.mainApp = mainApp;
+
 		if (!mainApp.getUser().getPermissionLevel().equals(PermissionLevels.HIGH)) {
 			adminBtn.setDisable(true);
 		}
-		
+
 		if (mainApp.getUser().getPermissionLevel().equals(PermissionLevels.LOW)) {
 			assignBtn.setDisable(true);
 		}
-
 	}
 
 }
